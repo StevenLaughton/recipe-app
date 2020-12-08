@@ -4,8 +4,9 @@ import {RecipeDto} from '../../shared/models/recipe.dto.model';
 import {EDIT, FEED} from '../../shared/constants/routes.const';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RecipeService} from '../../core/services/recipe.service';
-import {ActionSheetController, AlertController, ToastController} from '@ionic/angular';
+import {ActionSheetController, AlertController, PopoverController, ToastController} from '@ionic/angular';
 import {ImageService} from '../../core/services/image.service';
+import {ViewRecipePopoverComponent} from '../../components/view-recipe-popover/view-recipe-popover.component';
 
 @Component({
     selector: 'app-view-recipe',
@@ -22,7 +23,8 @@ export class ViewRecipePage implements OnInit {
         private readonly router: Router,
         private readonly toastController: ToastController,
         private readonly actionSheetController: ActionSheetController,
-        private readonly alertController: AlertController
+        private readonly alertController: AlertController,
+        private readonly popover: PopoverController
     ) {
     }
 
@@ -89,6 +91,17 @@ export class ViewRecipePage implements OnInit {
             }]
         });
         await actionSheet.present();
+    }
+
+    async presentPopover(ev: Event, recipe: RecipeDto) {
+        const popover = await this.popover.create({
+            component: ViewRecipePopoverComponent,
+            cssClass: 'view-recipe-popover.component.css',
+            event: ev,
+            componentProps: recipe,
+            translucent: false
+        });
+        return await popover.present();
     }
 
     async presentToast(content: string): Promise<void> {

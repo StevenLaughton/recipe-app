@@ -1,25 +1,25 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ControlErrorModule} from './control-error/control-error.module';
 import {ProfileCardModule} from './profile-card/profile-card.module';
 import {RecipeFormModule} from './recipe-form/recipe-form.module';
 import {SidebarModule} from './sidebar/sidebar.module';
+import {ViewRecipePopoverModule} from './view-recipe-popover/view-recipe-popover.module';
 
 
 @NgModule({
     declarations: [],
     imports: [
         CommonModule,
-        ControlErrorModule,
         ProfileCardModule,
         RecipeFormModule,
-        SidebarModule
+        SidebarModule,
+        ViewRecipePopoverModule
     ],
     exports: [
-        ControlErrorModule,
         ProfileCardModule,
         RecipeFormModule,
-        SidebarModule
+        SidebarModule,
+        ViewRecipePopoverModule
     ]
 })
 export class ComponentsModule {
