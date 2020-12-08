@@ -19,7 +19,7 @@
 			</ion-list-header>
 			<ion-item *ngFor="let ingredient of recipe.ingredients">
 				<ion-label class="ion-text-wrap">
-					{{ingredient?.amount}} {{ingredient?.name}}
+					{{ingredient?.amount | multiplier: 1}} {{ingredient?.name}}
 				</ion-label>
 			</ion-item>
 		</ion-list>
