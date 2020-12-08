@@ -1,0 +1,43 @@
+<ng-container *ngIf="recipe$ | async as recipe; else Loading">
+	<ion-header [translucent]="true">
+		<!--		parallax imageUrl="{{( imageService.get(recipe.id) | async) | async}}" maximumHeight="350"-->
+		<ion-toolbar>
+			<ion-title>{{recipe.name}}</ion-title>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="presentMenu(recipe)">
+					<ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</ion-header>
+
+	<ion-content [fullscreen]="true">
+		<ion-list>
+			<ion-list-header>
+				Ingredients
+			</ion-list-header>
+			<ion-item *ngFor="let ingredient of recipe.ingredients">
+				<ion-label class="ion-text-wrap">
+					{{ingredient?.amount}} {{ingredient?.name}}
+				</ion-label>
+			</ion-item>
+		</ion-list>
+
+		<ion-list>
+			<ion-list-header>
+				Method
+			</ion-list-header>
+			<ion-item *ngFor="let step of recipe.steps">
+				<ion-label class="ion-text-wrap">{{step}}</ion-label>
+			</ion-item>
+		</ion-list>
+
+	</ion-content>
+</ng-container>
+
+<ng-template #Loading>
+	<ion-spinner></ion-spinner>
+</ng-template>
+
+

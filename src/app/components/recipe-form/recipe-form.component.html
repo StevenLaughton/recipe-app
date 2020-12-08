@@ -1,0 +1,77 @@
+<ng-container *ngIf="form">
+	<form [formGroup]="form" (submit)="onSubmit()">
+		<ion-item>
+			<ion-label>Name</ion-label>
+			<ion-input type="text" formControlName="name" autocapitalize="words"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Portions</ion-label>
+			<ion-input type="number" inputmode="numeric" formControlName="portions"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Vegetarian</ion-label>
+			<ion-checkbox formControlName="vegetarian"></ion-checkbox>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Category</ion-label>
+			<ng-container *ngIf="createNewCategory; else UseExistingCategory">
+				<ion-input type="text" formControlName="category" autocapitalize="words"></ion-input>
+			</ng-container>
+			<ng-template #UseExistingCategory>
+				<ion-select formControlName="category" interface="action-sheet">
+					<ion-select-option *ngFor="let category of categories$ | async"
+									   [value]="category">{{category}}
+					</ion-select-option>
+				</ion-select>
+			</ng-template>
+			<ion-button slot="end"
+						aria-label="toggle category"
+						(click)="toggleCategory()">
+				<ion-icon name="swap-horizontal-outline"></ion-icon>
+			</ion-button>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Time</ion-label>
+			<ion-select formControlName="time" interface="action-sheet">
+				<ion-select-option *ngFor="let time of timeOptions"
+								   [value]="time">{{time}} min
+				</ion-select-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="stacked" autocapitalize="words">Ingredients</ion-label>
+			<ion-textarea auto-grow formControlName="ingredients"></ion-textarea>
+		</ion-item>
+
+		<ion-item>
+			<ion-label position="stacked">Steps</ion-label>
+			<ion-textarea auto-grow formControlName="steps"></ion-textarea>
+		</ion-item>
+
+		<ng-container *ngIf="imageService.photo; else AddImage">
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+						<ion-img [src]="imageService.photo.webviewPath"></ion-img>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-button (click)="imageService.addToStorage()">Change</ion-button>
+					<ion-button (click)="imageService.deleteFromStorage()" color="danger">Delete</ion-button>
+				</ion-row>
+			</ion-grid>
+		</ng-container>
+
+		<ng-template #AddImage>
+			<ion-button expand="block" (click)="imageService.addToStorage()">Add Photo</ion-button>
+		</ng-template>
+
+		<ion-button expand="block" type="submit">Submit</ion-button>
+
+	</form>
+</ng-container>

@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+
+		<ion-buttons slot="end">
+			<ion-button (click)="presentMenu()">
+				<ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<app-sidebar></app-sidebar>
+
+<ion-content [fullscreen]="true">
+	<ng-container *ngIf="recipes$; else Loading">
+		<ion-grid>
+			<ion-row>
+				<ion-col sizeLg="4" sizeMd="6" sizeXs="12"
+						 *ngFor="let recipe of recipes$ | async; trackBy:trackByFunction">
+					<app-feed-card (click)="goToRecipe(recipe)"
+								   [recipe]="recipe">
+					</app-feed-card>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ng-container>
+</ion-content>
+
+
+<ng-template #Loading>
+	<ion-col sizeLg="4" sizeMd="6" sizeXs="12">
+		<ion-card *ngFor="let i of loaderCount">
+			<div class="ion-padding custom-skeleton">
+				<ion-grid>
+					<ion-row>
+						<ion-col size="4">
+							<ion-thumbnail>
+								<ion-skeleton-text [animated]="true"></ion-skeleton-text>
+							</ion-thumbnail>
+						</ion-col>
+						<ion-col size="8">
+							<ion-skeleton-text [animated]="true"></ion-skeleton-text>
+							<ion-skeleton-text [animated]="true"></ion-skeleton-text>
+							<ion-skeleton-text [animated]="true"></ion-skeleton-text>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</div>
+		</ion-card>
+	</ion-col>
+</ng-template>
+

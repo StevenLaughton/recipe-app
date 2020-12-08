@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "myrecipes-ec638": {
+      "hosting": {
+        "app": [
+          "myrecipes-ec638"
+        ]
+      }
+    }
+  }
+}

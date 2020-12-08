@@ -1,0 +1,36 @@
+<ion-card>
+	<ion-grid>
+		<ion-row>
+			<ion-col size="6" class="no-padding">
+				<ng-container *ngIf="imageUrl$ | async; let url; else NoImage">
+					<img [src]="url" alt="Image" height="152" width="152">
+				</ng-container>
+				<ng-template #NoImage>
+					<img alt="Image" height="152" src="assets/icon/rice-bowl.png" width="152">
+				</ng-template>
+			</ion-col>
+
+			<ng-container *ngIf="recipe">
+				<ion-col size="6">
+					<ion-row>
+						<ion-card-header>
+							<ion-card-title>{{recipe.name}}</ion-card-title>
+							<ion-card-subtitle>{{recipe.category}}
+								<ion-badge *ngIf="recipe.vegetarian" color="success"><small>v</small></ion-badge>
+							</ion-card-subtitle>
+						</ion-card-header>
+					</ion-row>
+					<ion-row>
+						<ion-item lines="none">
+							<ion-icon size="small" name="person-outline"></ion-icon>
+							<ion-label>{{recipe.portions}}</ion-label>
+
+							<ion-icon size="small" name="time-outline"></ion-icon>
+							<ion-label>{{recipe.time}}</ion-label>
+						</ion-item>
+					</ion-row>
+				</ion-col>
+			</ng-container>
+		</ion-row>
+	</ion-grid>
+</ion-card>

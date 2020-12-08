@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>Edit Recipe</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<ng-container *ngIf="recipe$ | async as recipe; else Loading">
+		<app-recipe-form
+				(formSubmitted)="saveRecipe($event)"
+				[recipe]="recipe">
+		</app-recipe-form>
+	</ng-container>
+
+	<ng-template #Loading>
+		<ion-spinner></ion-spinner>
+	</ng-template>
+</ion-content>

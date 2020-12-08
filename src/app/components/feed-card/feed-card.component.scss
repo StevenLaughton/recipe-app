@@ -1,0 +1,32 @@
+
+ion-card {
+  display: flex;
+  margin: 2px 2px;
+
+  ion-card-title {
+    font-size: 14pt;
+  }
+
+  ion-card-header {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+
+  ion-grid, .no-padding {
+    padding-inline-start: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  ion-item {
+    width: fit-content;
+    width: -webkit-fill-available;
+    --background: 0;
+    --padding-start: 0;
+  }
+}
+
+
+img {
+  object-fit: cover;
+}
