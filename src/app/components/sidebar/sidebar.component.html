@@ -1,21 +1,24 @@
 <ng-container *ngIf="this.authService.getUser() | async as user">
 	<ion-menu contentId="main-content" type="overlay">
 		<ion-content>
-			<ion-list id="inbox-list">
+			<ion-list>
 				<app-profile-card [user]="user"></app-profile-card>
 				<ion-note>06.12.2020 01</ion-note>
 				<ion-list-header>Categories</ion-list-header>
 
-				<ion-menu-toggle auto-hide="false">
-					<ion-button
-							(click)="selectCategory();"
-							[class.selected]="selectedCategory == ''">All
-					</ion-button>
-					<ion-button *ngFor="let category of categories$ | async"
-								(click)="selectCategory(category);"
-								[class.selected]="selectedCategory == category">
-						<ion-label>{{ category }}</ion-label>
-					</ion-button>
+				<ion-menu-toggle auto-hide="true">
+					<ion-item-group>
+						<ion-item>
+							<ion-button fill="clear" class="full-button" (click)="selectCategory()">
+								All
+							</ion-button>
+						</ion-item>
+						<ion-item *ngFor="let category of categories$ | async">
+							<ion-button fill="clear" class="full-button" (click)="selectCategory(category)">
+								{{category}}
+							</ion-button>
+						</ion-item>
+					</ion-item-group>
 				</ion-menu-toggle>
 			</ion-list>
 		</ion-content>

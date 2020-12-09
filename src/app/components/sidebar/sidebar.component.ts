@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit {
     }
 
     selectCategory(category?: string): void {
+        console.log(category);
         this.selectedCategory = category ?? '';
         this.categoryService.applyFilter(category);
     }

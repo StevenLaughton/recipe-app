@@ -2,6 +2,12 @@
 	<ion-header [translucent]="true">
 		<!--		parallax imageUrl="{{( imageService.get(recipe.id) | async) | async}}" maximumHeight="350"-->
 		<ion-toolbar>
+			<ion-buttons slot="start">
+				<ion-button (click)="presentPopover($event, recipe)">
+					<ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+
 			<ion-title>{{recipe.name}}</ion-title>
 
 			<ion-buttons slot="end">
@@ -13,14 +19,13 @@
 	</ion-header>
 
 	<ion-content [fullscreen]="true">
-		<ion-button (click)="presentPopover($event, recipe)"></ion-button>
 		<ion-list>
 			<ion-list-header>
 				Ingredients
 			</ion-list-header>
 			<ion-item *ngFor="let ingredient of recipe.ingredients">
 				<ion-label class="ion-text-wrap">
-					{{ingredient?.amount | multiplier: 1}} {{ingredient?.name}}
+					{{ingredient.amount | multiplier: 1}} {{ingredient.name}}
 				</ion-label>
 			</ion-item>
 		</ion-list>
@@ -33,6 +38,7 @@
 				<ion-label class="ion-text-wrap">{{step}}</ion-label>
 			</ion-item>
 		</ion-list>
+
 
 	</ion-content>
 </ng-container>

@@ -36,7 +36,6 @@ export class EditRecipePage implements OnInit {
 
     async saveRecipe(recipe: Recipe): Promise<void> {
         this.recipeService.updateAsync(recipe).then(async id => {
-
             await this.imageService.add(id);
 
             const toast = await this.toastController.create({

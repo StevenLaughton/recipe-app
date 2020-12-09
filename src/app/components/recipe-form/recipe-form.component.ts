@@ -62,6 +62,7 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
     onSubmit(): void {
         if (this.form && this.form.valid) {
             const recipeToAdd = this.form.getRawValue() as Recipe;
+            recipeToAdd.id = this.recipe.id;
             recipeToAdd.ingredients = this.form.controls.ingredients.value.split(this.delimiter).map((i: string) => i.trim());
             recipeToAdd.steps = this.form.controls.steps.value.split(this.delimiter).map((i: string) => i.trim());
 

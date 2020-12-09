@@ -96,7 +96,6 @@ export class ViewRecipePage implements OnInit {
     async presentPopover(ev: Event, recipe: RecipeDto) {
         const popover = await this.popover.create({
             component: ViewRecipePopoverComponent,
-            cssClass: 'view-recipe-popover.component.css',
             event: ev,
             componentProps: recipe,
             translucent: false
