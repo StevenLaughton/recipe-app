@@ -19,6 +19,7 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
     }
 
     private delimiter = '..';
+    private ingredientsRegex = '(^(\\d*\\.)?\\d+\\s+[\\w\\s\\d]+\\s?\\.\\.+\\s?)+((\\d*\\.)?\\d+\\s+[\\w\\s\\d]+\\s?)';
     timeOptions = ['<15', '15', '30', '45', '60', '>60'];
 
     @Input()
@@ -40,7 +41,7 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
             category: [recipe.category, Validators.required],
             vegetarian: [recipe.vegetarian],
             ingredients: [recipe.ingredients.join(this.delimiter),
-                [Validators.required, Validators.pattern('(([0-9])+\\s+([a-zA-Z0-9\\s])+(\\.\\.)+)+([0-9])+\\s+([a-zA-Z0-9\\s])+')]],
+                [Validators.required, Validators.pattern(this.ingredientsRegex)]],
             steps: [recipe.steps.join(this.delimiter), Validators.required]
         });
     }

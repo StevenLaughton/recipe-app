@@ -1,5 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {PopoverController} from '@ionic/angular';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActionSheetController, AlertController, PopoverController, ToastController} from '@ionic/angular';
+import {EDIT, FEED} from '../../shared/constants/routes.const';
+import {RecipeDto} from '../../shared/models/recipe.dto.model';
+import {Router} from '@angular/router';
+import {RecipeService} from '../../core/services/recipe.service';
+import {ImageService} from '../../core/services/image.service';
 
 @Component({
     selector: 'app-view-recipe-popover',
@@ -7,17 +12,77 @@ import {PopoverController} from '@ionic/angular';
     styleUrls: ['./view-recipe-popover.component.scss'],
 })
 export class ViewRecipePopoverComponent implements OnInit {
+    @Input()
+    recipe!: RecipeDto;
+
+    @Input()
+    multiplier = 1;
+
+    selectedPortions = 1;
+    portions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     constructor(
-        private readonly popover: PopoverController
+        private readonly recipeService: RecipeService,
+        private readonly imageService: ImageService,
+        private readonly router: Router,
+        private readonly actionSheetController: ActionSheetController,
+        private readonly alertController: AlertController,
+        private readonly toastController: ToastController,
+        private readonly popover: PopoverController,
     ) {
+
     }
 
-    ngOnInit() {
+
+    ngOnInit(): void {
     }
 
     async closePopover() {
-       await this.popover.dismiss();
+        await this.popover.dismiss();
+    }
+
+    async navigateToEdit(recipeId: string): Promise<void> {
+        await this.closePopover();
+        await this.router.navigate([EDIT, recipeId]);
+    }
+
+    private deleteRecipe(recipe: RecipeDto): void {
+        this.recipeService.delete(recipe.id).then(async _ => {
+            await this.imageService.delete(recipe.id);
+            const toast = await this.toastController.create({
+                message: `Deleted ${recipe.name}`,
+                duration: 2000
+            });
+            await toast.present();
+            await this.router.navigate([FEED]);
+        });
+    }
+
+    async presentDeleteAlert(recipe: RecipeDto) {
+        await this.closePopover();
+        const alert = await this.alertController.create({
+            header: 'Are you sure!',
+            message: `Are you sure you want to delete ${recipe.name}`,
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                }, {
+                    text: 'Okay',
+                    handler: () => {
+                        this.deleteRecipe(recipe);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    async calculateMultiplier(): Promise<void> {
+        this.multiplier = this.selectedPortions / this.recipe?.portions;
+        await this.popover.dismiss(this.multiplier, 'multiplier');
     }
 
 }

@@ -1,4 +1,5 @@
-ion-item-group, ion-item{
-  --background: 0;
+ion-item-group, ion-item {
+  --background: var(--ion-color-step-100);
+  --padding-bottom: 20px;
 }
 

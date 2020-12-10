@@ -1,15 +1,24 @@
-<ng-container *ngIf="this.authService.getUser() | async as user">
+<ng-container *ngIf="user$ | async as user">
 	<ion-menu contentId="main-content" type="overlay">
 		<ion-content>
 			<ion-list>
 				<app-profile-card [user]="user"></app-profile-card>
 				<ion-note>06.12.2020 01</ion-note>
+
+				<ion-item>
+					<ion-label>Vegetarian</ion-label>
+					<ion-toggle (click)="toggleVegetarian()"
+								[(ngModel)]="vegetarianSelected">
+					</ion-toggle>
+				</ion-item>
+
 				<ion-list-header>Categories</ion-list-header>
 
 				<ion-menu-toggle auto-hide="true">
 					<ion-item-group>
+
 						<ion-item>
-							<ion-button fill="clear" class="full-button" (click)="selectCategory()">
+							<ion-button fill="clear" class="full-button" (click)="selectCategory(null)">
 								All
 							</ion-button>
 						</ion-item>
@@ -19,6 +28,7 @@
 							</ion-button>
 						</ion-item>
 					</ion-item-group>
+
 				</ion-menu-toggle>
 			</ion-list>
 		</ion-content>

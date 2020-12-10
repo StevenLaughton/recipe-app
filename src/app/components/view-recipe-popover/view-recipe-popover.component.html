@@ -1,34 +1,35 @@
-<ion-card>
-	<ion-item-group>
-		<ion-item>
-			<ion-label position="floating">Portions</ion-label>
-			<ion-select>
-				<ion-select-option value="">No Game Console</ion-select-option>
-				<ion-select-option value="nes">NES</ion-select-option>
-				<ion-select-option value="n64">Nintendo64</ion-select-option>
-				<ion-select-option value="ps">PlayStation</ion-select-option>
-				<ion-select-option value="genesis">Sega Genesis</ion-select-option>
-				<ion-select-option value="saturn">Sega Saturn</ion-select-option>
-				<ion-select-option value="snes">SNES</ion-select-option>
-			</ion-select>
-		</ion-item>
-		<ion-item [button]="true" [detail]="false" slot="center">
-			<ion-label>
-				Edit
-			</ion-label>
-		</ion-item>
+<ion-list lines="none">
+	<ion-item>
 
-		<ion-item [button]="true" [detail]="false" slot="center">
-			<ion-label>
-				Delete
-			</ion-label>
-		</ion-item>
+		<ion-label position="stacked">
+			<ion-icon name="person-outline" slot="start"></ion-icon>
+			Portions
+		</ion-label>
+		<ion-select interface="action-sheet"
+					[placeholder]="(recipe.portions * multiplier).toString()"
+					(ionChange)="calculateMultiplier()"
+					[ngModel]="selectedPortions">
+			<ion-select-option *ngFor="let portion of portions" [value]="portion">{{portion}}</ion-select-option>
+		</ion-select>
+	</ion-item>
 
-		<ion-item [button]="true" [detail]="false" slot="center" (click)="closePopover()">
-			<ion-label>
-				Close
-			</ion-label>
-		</ion-item>
-	</ion-item-group>
+	<ion-item
+			[button]="true"
+			[detail]="false"
+			(click)="navigateToEdit(recipe.id)">
+		<ion-icon name="create-outline" slot="start"></ion-icon>
+		<ion-label>
+			Edit
+		</ion-label>
+	</ion-item>
 
-</ion-card>
+	<ion-item [button]="true"
+			  [detail]="false"
+			  (click)="presentDeleteAlert(recipe)">
+		<ion-icon name="trash-outline" slot="start"></ion-icon>
+		<ion-label>
+			Delete
+		</ion-label>
+	</ion-item>
+
+</ion-list>

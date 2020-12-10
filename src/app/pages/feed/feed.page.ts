@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Recipe} from '../../shared/models/recipe.model';
 import {FeedService} from '../../core/services/feed.service';
 import {Router} from '@angular/router';
 import {CategoryService} from '../../core/services/category.service';
 import {ActionSheetController} from '@ionic/angular';
 import {ADD, VIEW} from '../../shared/constants/routes.const';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-feed',
@@ -13,19 +13,16 @@ import {ADD, VIEW} from '../../shared/constants/routes.const';
     styleUrls: ['./feed.page.scss'],
 })
 export class FeedPage {
-    recipes$: Observable<Recipe[]> | undefined = undefined;
+    recipes$: Observable<Recipe[]>;
     loaderCount = Array(10);
 
     constructor(
+        public feedService: FeedService,
         private readonly actionSheetController: ActionSheetController,
         private readonly categoryService: CategoryService,
-        private readonly feedService: FeedService,
         private readonly router: Router,
     ) {
-        this.categoryService.getFilter()
-            .subscribe(category => {
-                this.recipes$ = this.feedService.get(category);
-            });
+        this.recipes$ = feedService.get();
     }
 
     trackByFunction(index: number, recipe: Recipe): string {

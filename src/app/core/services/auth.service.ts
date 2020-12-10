@@ -24,12 +24,14 @@ export class AuthService {
     }
 
     getUser(): Observable<User | null> {
+        console.log('AuthService: getUser');
         return this.user
             .asObservable()
             .pipe(switchMap((user: Observable<User | null>) => user));
     }
 
     isLoggedIn(): Observable<boolean> {
+        console.log('AuthService: isLoggedIn');
         return this.getUser().pipe(
             take(1),
             map((user: User | null) => {
@@ -40,6 +42,7 @@ export class AuthService {
 
     // Sign out
     async SignOut(): Promise<void> {
+        console.log('AuthService: signOut');
         await this.afAuth.signOut();
         await this.router.navigate([LOGIN]);
         const toast = await this.toastController.create({

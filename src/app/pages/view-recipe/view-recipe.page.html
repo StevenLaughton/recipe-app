@@ -1,17 +1,10 @@
 <ng-container *ngIf="recipe$ | async as recipe; else Loading">
 	<ion-header [translucent]="true">
-		<!--		parallax imageUrl="{{( imageService.get(recipe.id) | async) | async}}" maximumHeight="350"-->
 		<ion-toolbar>
-			<ion-buttons slot="start">
-				<ion-button (click)="presentPopover($event, recipe)">
-					<ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-
 			<ion-title>{{recipe.name}}</ion-title>
 
 			<ion-buttons slot="end">
-				<ion-button (click)="presentMenu(recipe)">
+				<ion-button (click)="presentPopover($event, recipe)">
 					<ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
 				</ion-button>
 			</ion-buttons>
@@ -25,7 +18,7 @@
 			</ion-list-header>
 			<ion-item *ngFor="let ingredient of recipe.ingredients">
 				<ion-label class="ion-text-wrap">
-					{{ingredient.amount | multiplier: 1}} {{ingredient.name}}
+					{{ingredient.amount | multiplier: multiplier}} {{ingredient.name}}
 				</ion-label>
 			</ion-item>
 		</ion-list>

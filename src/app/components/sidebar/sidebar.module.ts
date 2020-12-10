@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {SidebarComponent} from './sidebar.component';
 import {IonicModule} from '@ionic/angular';
 import {ProfileCardModule} from '../profile-card/profile-card.module';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {ProfileCardModule} from '../profile-card/profile-card.module';
     imports: [
         CommonModule,
         IonicModule,
-        ProfileCardModule
+        ProfileCardModule,
+        FormsModule
     ],
     exports: [SidebarComponent]
 })
