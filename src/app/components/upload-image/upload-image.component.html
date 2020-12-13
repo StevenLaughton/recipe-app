@@ -1,0 +1,28 @@
+<ng-container *ngIf="imageService.photo; else AddImage">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-thumbnail slot="start">
+						<ion-img [src]="imageService.photo.webviewPath"></ion-img>
+					</ion-thumbnail>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-button expand="block" (click)="imageService.addToStorage()">
+					Change
+				</ion-button>
+				<ion-button expand="block" (click)="imageService.deleteFromStorage()" color="danger">
+					Delete
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ng-container>
+
+<ng-template #AddImage>
+	<ion-button expand="block" (click)="imageService.addToStorage()">
+		Add Photo
+		<ion-icon name="image-outline" slot="end"></ion-icon>
+	</ion-button>
+</ng-template>

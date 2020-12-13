@@ -23,7 +23,7 @@ export class SidebarComponent {
                 private readonly feedService: FeedService) {
         this.categories$ = categoryService.getCategories();
         this.user$ = authService.getUser();
-        this.vegetarianSelected = true;
+        this.vegetarianSelected = false;
     }
 
     async logout(): Promise<void> {

@@ -27,6 +27,9 @@ ion-card {
 }
 
 
-img {
-  object-fit: cover;
+ion-thumbnail {
+  --border-radius: 0;
+  --size: 152px;
+  ion-img {
+  }
 }

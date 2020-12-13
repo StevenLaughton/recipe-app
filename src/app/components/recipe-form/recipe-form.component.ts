@@ -1,25 +1,47 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {CategoryService} from '../../core/services/category.service';
 import {Recipe} from '../../shared/models/recipe.model';
-import {ImageService} from '../../core/services/image.service';
 
 @Component({
     selector: 'app-recipe-form',
     templateUrl: './recipe-form.component.html',
     styleUrls: ['./recipe-form.component.scss']
 })
-export class RecipeFormComponent implements OnInit, OnDestroy {
+export class RecipeFormComponent implements OnInit {
+
+    get name() {
+        return this.form?.controls.name;
+    }
+
+    get portions() {
+        return this.form?.controls.portions;
+    }
+
+    get category() {
+        return this.form?.controls.category;
+    }
+
+    get time() {
+        return this.form?.controls.time;
+    }
+
+    get ingredients() {
+        return this.form?.controls.ingredients;
+    }
+
+    get steps() {
+        return this.form?.controls.steps;
+    }
 
     constructor(private readonly categoryService: CategoryService,
-                private readonly formBuilder: FormBuilder,
-                public imageService: ImageService) {
+                private readonly formBuilder: FormBuilder) {
         this.categories$ = categoryService.getCategories();
     }
 
     private delimiter = '..';
-    private ingredientsRegex = '(^(\\d*\\.)?\\d+\\s+[\\w\\s\\d]+\\s?\\.\\.+\\s?)+((\\d*\\.)?\\d+\\s+[\\w\\s\\d]+\\s?)';
+    private ingredientsRegex = /(^(\d*\.)?\d+\s+[\w\s\d]+\s+\.\.+\s+)+((\d*\.)?\d+\s+[\w\s\d]+\s+)/gm;
     timeOptions = ['<15', '15', '30', '45', '60', '>60'];
 
     @Input()
@@ -32,11 +54,10 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
     categories$: Observable<string[]>;
     createNewCategory = false;
 
-
     private initialiseForm(recipe: Recipe): FormGroup {
         return this.formBuilder.group({
             name: [recipe.name, Validators.required],
-            portions: [recipe.portions, Validators.required],
+            portions: [recipe.portions, [Validators.required, Validators.min(1), Validators.max(10)]],
             time: [recipe.time, Validators.required],
             category: [recipe.category, Validators.required],
             vegetarian: [recipe.vegetarian],
@@ -48,11 +69,6 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.form = this.initialiseForm(this.recipe);
-    }
-
-
-    async ngOnDestroy(): Promise<void> {
-        await this.imageService.deleteFromStorage();
     }
 
     toggleCategory(): void {
@@ -68,8 +84,9 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
             recipeToAdd.steps = this.form.controls.steps.value.split(this.delimiter).map((i: string) => i.trim());
 
             this.formSubmitted.emit(recipeToAdd);
+        } else {
+            this.form?.markAllAsTouched();
         }
     }
-
 }
 

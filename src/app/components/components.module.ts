@@ -4,6 +4,8 @@ import {ProfileCardModule} from './profile-card/profile-card.module';
 import {RecipeFormModule} from './recipe-form/recipe-form.module';
 import {SidebarModule} from './sidebar/sidebar.module';
 import {ViewRecipePopoverModule} from './view-recipe-popover/view-recipe-popover.module';
+import {UploadImageModule} from './upload-image/upload-image.module';
+import {FeedCardModule} from './feed-card/feed-card.module';
 
 
 @NgModule({
@@ -13,13 +15,17 @@ import {ViewRecipePopoverModule} from './view-recipe-popover/view-recipe-popover
         ProfileCardModule,
         RecipeFormModule,
         SidebarModule,
-        ViewRecipePopoverModule
+        ViewRecipePopoverModule,
+        UploadImageModule,
+        FeedCardModule
     ],
     exports: [
         ProfileCardModule,
         RecipeFormModule,
         SidebarModule,
-        ViewRecipePopoverModule
+        ViewRecipePopoverModule,
+        UploadImageModule,
+        FeedCardModule
     ]
 })
 export class ComponentsModule {

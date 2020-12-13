@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {Observable, of} from 'rxjs';
 import {Photo} from '../../shared/models/photo.model';
@@ -11,7 +11,7 @@ const {Camera} = Plugins;
 @Injectable({
     providedIn: 'root'
 })
-export class ImageService implements OnDestroy {
+export class ImageService {
     public photo: Photo | undefined;
     private imageIds$: Observable<string[]>;
 
@@ -57,8 +57,8 @@ export class ImageService implements OnDestroy {
     async addToStorage(): Promise<void> {
         const capturedPhoto = await Camera.getPhoto({
             resultType: CameraResultType.Uri,
-            source: CameraSource.Camera,
-            quality: 100
+            source: CameraSource.Photos,
+            quality: 75
         });
 
         this.photo = new Photo(
@@ -67,11 +67,7 @@ export class ImageService implements OnDestroy {
         );
     }
 
-
     async deleteFromStorage(): Promise<void> {
         this.photo = undefined;
-    }
-
-    ngOnDestroy(): void {
     }
 }

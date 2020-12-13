@@ -1,10 +1,12 @@
-
-.category {
-  width: 60%;
-  padding-left: 10%;
-  padding-right: 2%;
+ion-item.ion-invalid.ion-dirty {
+  border-bottom: 2px solid var(--ion-color-danger) !important;
 }
 
-//form.submitted ion-input.ng-invalid, ion-input.ng-dirty.ng-invalid {
-//  border: 1px solid red;
-//}
+ion-item.ion-valid.ion-dirty {
+  border-bottom: 2px solid var(--ion-color-success) !important;
+}
+
+ion-thumbnail {
+  --border-radius: 0;
+}
+

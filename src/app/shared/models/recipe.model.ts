@@ -20,7 +20,7 @@ export class Recipe {
   ) {
     this.id = id ?? '';
     this.name = name ?? '';
-    this.portions = portions ?? 0;
+    this.portions = portions ?? 1;
     this.time = time ?? '';
     this.category = category ?? '';
     this.vegetarian = vegetarian ?? false;

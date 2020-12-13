@@ -14,6 +14,8 @@ import {ViewRecipePopoverComponent} from '../../components/view-recipe-popover/v
 })
 export class ViewRecipePage implements OnInit {
     recipe$: Observable<RecipeDto | undefined> = new Observable<RecipeDto>();
+
+    selectedPortions: number | null = null;
     multiplier = 1;
 
     constructor(
@@ -48,13 +50,14 @@ export class ViewRecipePage implements OnInit {
             event: ev,
             componentProps: {
                 recipe,
-                multiplier: this.multiplier
+                inputPortions: this.selectedPortions ?? recipe.portions
             },
         });
 
         popover.onDidDismiss().then(data => {
-            if (data.role === 'multiplier') {
-                this.multiplier = data.data;
+            if (data.role === 'portions') {
+                this.multiplier = data.data / recipe.portions;
+                this.selectedPortions = data.data;
             }
         });
 

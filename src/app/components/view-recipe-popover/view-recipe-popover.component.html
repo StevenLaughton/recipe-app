@@ -1,14 +1,13 @@
 <ion-list lines="none">
 	<ion-item>
-
 		<ion-label position="stacked">
 			<ion-icon name="person-outline" slot="start"></ion-icon>
 			Portions
 		</ion-label>
 		<ion-select interface="action-sheet"
-					[placeholder]="(recipe.portions * multiplier).toString()"
+					[placeholder]="(inputPortions).toString()"
 					(ionChange)="calculateMultiplier()"
-					[ngModel]="selectedPortions">
+					[(ngModel)]="selectedPortions">
 			<ion-select-option *ngFor="let portion of portions" [value]="portion">{{portion}}</ion-select-option>
 		</ion-select>
 	</ion-item>

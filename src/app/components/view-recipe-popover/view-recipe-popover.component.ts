@@ -16,10 +16,10 @@ export class ViewRecipePopoverComponent implements OnInit {
     recipe!: RecipeDto;
 
     @Input()
-    multiplier = 1;
+    inputPortions!: number;
 
-    selectedPortions = 1;
-    portions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    selectedPortions: number | null = null;
+    portions = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
     constructor(
         private readonly recipeService: RecipeService,
@@ -35,6 +35,7 @@ export class ViewRecipePopoverComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.selectedPortions = this.inputPortions;
     }
 
     async closePopover() {
@@ -81,8 +82,7 @@ export class ViewRecipePopoverComponent implements OnInit {
     }
 
     async calculateMultiplier(): Promise<void> {
-        this.multiplier = this.selectedPortions / this.recipe?.portions;
-        await this.popover.dismiss(this.multiplier, 'multiplier');
+        await this.popover.dismiss(this.selectedPortions, 'portions');
     }
 
 }
