@@ -3,13 +3,14 @@
 		<ion-row>
 			<ion-col size="6" class="no-padding">
 				<ng-container *ngIf="imageUrl$ | async; let url; else NoImage">
-					<!--					<img [src]="url" alt="Image" height="152" width="152">-->
 					<ion-thumbnail>
-						<ion-img [src]="url"></ion-img>
+						<ion-img [src]="url" alt="Recipe Image"></ion-img>
 					</ion-thumbnail>
 				</ng-container>
 				<ng-template #NoImage>
-					<img alt="Image" height="152" src="assets/icon/rice-bowl.png" width="152">
+					<ion-thumbnail>
+						<ion-img src="assets/icon/rice-bowl.png" alt="Rice Bowl"></ion-img>
+					</ion-thumbnail>
 				</ng-template>
 			</ion-col>
 

@@ -9,10 +9,11 @@
 				</ion-item>
 			</ion-col>
 			<ion-col>
-				<ion-button expand="block" (click)="imageService.addToStorage()">
+				<ion-button expand="block" (click)="imageService.addToStorage()" aria-label="replace photo">
 					Change
 				</ion-button>
-				<ion-button expand="block" (click)="imageService.deleteFromStorage()" color="danger">
+				<ion-button expand="block" (click)="imageService.deleteFromStorage()" color="danger"
+							aria-label="delete photo">
 					Delete
 				</ion-button>
 			</ion-col>
@@ -21,7 +22,7 @@
 </ng-container>
 
 <ng-template #AddImage>
-	<ion-button expand="block" (click)="imageService.addToStorage()">
+	<ion-button expand="block" (click)="imageService.addToStorage()" aria-label="add photo">
 		Add Photo
 		<ion-icon name="image-outline" slot="end"></ion-icon>
 	</ion-button>

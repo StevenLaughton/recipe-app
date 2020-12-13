@@ -4,6 +4,7 @@ import {AlertController, Platform, ToastController} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {SwUpdate} from '@angular/service-worker';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-root',
@@ -11,12 +12,15 @@ import {SwUpdate} from '@angular/service-worker';
     styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+    title = 'Recipes App';
 
     constructor(
         private platform: Platform,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private swUpdate: SwUpdate,
+        private titleService: Title,
+        private metaService: Meta,
         public toastController: ToastController,
         public alertController: AlertController
     ) {
@@ -31,6 +35,7 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.addMetaTags();
         await this.checkAndUpdateServiceWorker();
     }
 
@@ -70,5 +75,13 @@ export class AppComponent implements OnInit {
         });
 
         await alert.present();
+    }
+
+    private addMetaTags() {
+        this.titleService.setTitle(this.title);
+        this.metaService.addTags([
+            {name: 'keywords', content: 'Recipe'},
+            {name: 'description', content: 'Recipe App'}
+        ]);
     }
 }
