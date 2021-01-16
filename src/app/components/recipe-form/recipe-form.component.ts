@@ -41,7 +41,7 @@ export class RecipeFormComponent implements OnInit {
     }
 
     private delimiter = '..';
-    private ingredientsRegex = /(^(\d*\.)?\d+\s+[\w\s\d]+\s+\.\.+\s+)+((\d*\.)?\d+\s+[\w\s\d]+\s+)/gm;
+    private ingredientsRegex = new RegExp(/((\d*\.)?\d+\s+[\w\s\d]*\s\.\.\s*)*((\d*\.)?\d+\s*[\w\s\d]*\s)/gm);
     timeOptions = ['<15', '15', '30', '45', '60', '>60'];
 
     @Input()
