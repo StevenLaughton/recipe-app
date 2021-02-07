@@ -14,6 +14,8 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {ComponentsModule} from './components/components.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
     signInFlow: 'popup',
@@ -41,6 +43,9 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
             enabled: environment.production,
             registrationStrategy: 'registerImmediately',
         }),
+        StoreModule.forRoot(reducers, {
+      metaReducers
+    }),
     ],
     providers: [
         StatusBar,

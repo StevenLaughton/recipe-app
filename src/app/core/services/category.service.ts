@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {RecipeDto} from '../../shared/models/recipe.dto.model';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {distinct, map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -21,10 +21,8 @@ export class CategoryService {
     getCategories(): Observable<string[]> {
         return this.db.collection<RecipeDto>('recipes').valueChanges()
             .pipe(
-                map<RecipeDto[], string[]>(recipes =>
-                    recipes.map(item => item.category)
-                        .filter((value, index, self) => self.indexOf(value) === index)
-                )
+                map<RecipeDto[], string[]>(recipes => recipes.map(recipe => recipe.category)),
+                distinct()
             );
     }
 
