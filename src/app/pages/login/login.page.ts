@@ -1,35 +1,31 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FEED} from '../../shared/constants/routes.const';
-import {AuthService} from '../../core/services/auth.service';
-import {Router} from '@angular/router';
-import {untilDestroyed} from 'ngx-take-until-destroy';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FEED } from '../../shared/constants/routes.const';
+import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, OnDestroy {
-    constructor(
-        private authService: AuthService,
-        private router: Router,
-    ) {
-    }
+  constructor(private authService: AuthService, private router: Router) {}
 
-    ngOnInit() {
-        this.authService.isLoggedIn()
-            .pipe(untilDestroyed(this))
-            .subscribe(async (loggedIn: boolean) => {
-                if (loggedIn) {
-                    await this.router.navigate([FEED]);
-                }
-            });
-    }
+  ngOnDestroy(): void {}
 
-    async successCallback(): Promise<void> {
-        await this.router.navigate([FEED]);
-    }
+  ngOnInit() {
+    this.authService
+      .isLoggedIn()
+      .pipe(untilDestroyed(this))
+      .subscribe(async (loggedIn: boolean) => {
+        if (loggedIn) {
+          await this.router.navigate([FEED]);
+        }
+      });
+  }
 
-    ngOnDestroy(): void {
-    }
+  async successCallback(): Promise<void> {
+    await this.router.navigate([FEED]);
+  }
 }

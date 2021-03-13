@@ -1,43 +1,50 @@
 <ng-container *ngIf="recipe$ | async as recipe; else Loading">
 	<ion-header [translucent]="true">
 		<ion-toolbar>
-			<ion-title>{{recipe.name}}</ion-title>
+			<ion-buttons slot="start">
+				<ion-back-button></ion-back-button>
+			</ion-buttons>
 
 			<ion-buttons slot="end">
 				<ion-button (click)="presentPopover($event, recipe)">
 					<ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
 				</ion-button>
 			</ion-buttons>
+
+			<ion-title>{{recipe.name}}</ion-title>
 		</ion-toolbar>
 	</ion-header>
 
 	<ion-content [fullscreen]="true">
-		<ion-list>
-			<ion-list-header>
-				Ingredients
-			</ion-list-header>
-			<ion-item *ngFor="let ingredient of recipe.ingredients">
-				<ion-label class="ion-text-wrap">
-					{{ingredient.amount | multiplier: multiplier}} {{ingredient.name}}
-				</ion-label>
-			</ion-item>
-		</ion-list>
-
-		<ion-list>
-			<ion-list-header>
-				Method
-			</ion-list-header>
-			<ion-item *ngFor="let step of recipe.steps">
-				<ion-label class="ion-text-wrap">{{step}}</ion-label>
-			</ion-item>
-		</ion-list>
-
-
+		<ion-grid>
+			<ion-row>
+				<ion-col sizeLg="4" sizeXs="12">
+					<ion-list>
+						<ion-list-header>
+							Ingredients
+						</ion-list-header>
+						<ion-item *ngFor="let ingredient of recipe.ingredients">
+							<ion-label class="ion-text-wrap">
+								{{ingredient.amount | multiplier: multiplier}} {{ingredient.name}}
+							</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+				<ion-col sizeLg="8" sizeXs="12">
+					<ion-list>
+						<ion-list-header>
+							Method
+						</ion-list-header>
+						<ion-item *ngFor="let step of recipe.steps">
+							<ion-label class="ion-text-wrap">{{step}}</ion-label>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 	</ion-content>
 </ng-container>
 
 <ng-template #Loading>
 	<ion-spinner></ion-spinner>
 </ng-template>
-
-

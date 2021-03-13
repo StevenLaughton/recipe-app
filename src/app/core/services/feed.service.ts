@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {Recipe} from '../../shared/models/recipe.model';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import firebase from 'firebase';
 import CollectionReference = firebase.firestore.CollectionReference;
 import Query = firebase.firestore.Query;
@@ -16,14 +16,13 @@ export class FeedService {
     private categoryFilter$: BehaviorSubject<string | null>;
     private vegetarianFilter$: BehaviorSubject<boolean>;
 
-    constructor(private db: AngularFirestore) {
+    constructor(private readonly db: AngularFirestore) {
         console.log('constructing: FeedService');
         this.categoryFilter$ = new BehaviorSubject<string | null>(null);
         this.vegetarianFilter$ = new BehaviorSubject<boolean>(false);
 
         this.recipes$ = combineLatest(
-            this.categoryFilter$,
-            this.vegetarianFilter$
+            [this.categoryFilter$, this.vegetarianFilter$]
         ).pipe(
             switchMap(([category, vegetarian]) =>
                 db.collection<Recipe>('recipes', ref => {
@@ -41,8 +40,9 @@ export class FeedService {
     }
 
     get(): Observable<Recipe[]> {
-        console.log('FeedService: Get()');
-        return this.recipes$;
+        return this.recipes$.pipe(
+            tap(() => console.log('FeedService: Get()'))
+        );
     }
 
     filterByCategory(category: string | null): void {

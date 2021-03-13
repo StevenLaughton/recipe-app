@@ -4,7 +4,7 @@
 			<ion-label>Name</ion-label>
 			<ion-input type="text" formControlName="name" autocapitalize="words"></ion-input>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="name?.touched && name?.invalid && name?.errors?.required">
+				*ngIf="name?.touched && name?.invalid && name?.errors?.required">
 				Name is required
 			</ion-label>
 		</ion-item>
@@ -13,15 +13,15 @@
 			<ion-label>Portions</ion-label>
 			<ion-input type="number" inputmode="numeric" formControlName="portions"></ion-input>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="portions?.touched && portions?.invalid && portions?.errors?.required">
+				*ngIf="portions?.touched && portions?.invalid && portions?.errors?.required">
 				Portions are required
 			</ion-label>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="portions?.dirty && portions?.invalid && portions?.errors?.min">
+				*ngIf="portions?.dirty && portions?.invalid && portions?.errors?.min">
 				Portions must be above 0
 			</ion-label>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="portions?.dirty && portions?.invalid && portions?.errors?.max">
+				*ngIf="portions?.dirty && portions?.invalid && portions?.errors?.max">
 				Portions must be below 10
 			</ion-label>
 		</ion-item>
@@ -38,18 +38,15 @@
 			</ng-container>
 			<ng-template #UseExistingCategory>
 				<ion-select formControlName="category" interface="action-sheet">
-					<ion-select-option *ngFor="let category of categories$ | async"
-									   [value]="category">{{category}}
+					<ion-select-option *ngFor="let category of categories$ | async" [value]="category">{{category}}
 					</ion-select-option>
 				</ion-select>
 			</ng-template>
-			<ion-button slot="end"
-						aria-label="toggle category"
-						(click)="toggleCategory()">
+			<ion-button slot="end" aria-label="toggle category" (click)="toggleCategory()">
 				<ion-icon name="swap-horizontal-outline"></ion-icon>
 			</ion-button>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="category?.dirty && category?.invalid && category?.errors?.required">
+				*ngIf="category?.dirty && category?.invalid && category?.errors?.required">
 				Category is required
 			</ion-label>
 		</ion-item>
@@ -57,12 +54,11 @@
 		<ion-item>
 			<ion-label>Time</ion-label>
 			<ion-select formControlName="time" interface="action-sheet">
-				<ion-select-option *ngFor="let time of timeOptions"
-								   [value]="time">{{time}} min
+				<ion-select-option *ngFor="let time of timeOptions" [value]="time">{{time}} min
 				</ion-select-option>
 			</ion-select>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="time?.dirty && time?.invalid && time?.errors?.required">
+				*ngIf="time?.dirty && time?.invalid && time?.errors?.required">
 				Time is required
 			</ion-label>
 		</ion-item>
@@ -71,11 +67,11 @@
 			<ion-label position="stacked" autocapitalize="words">Ingredients</ion-label>
 			<ion-textarea auto-grow formControlName="ingredients"></ion-textarea>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="ingredients?.dirty && ingredients?.invalid && ingredients?.errors?.required">
+				*ngIf="ingredients?.dirty && ingredients?.invalid && ingredients?.errors?.required">
 				Ingredients are required
 			</ion-label>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="ingredients?.dirty && ingredients?.invalid && ingredients?.errors?.pattern">
+				*ngIf="ingredients?.dirty && ingredients?.invalid && ingredients?.errors?.pattern">
 				Ingredients do not match the pattern
 			</ion-label>
 		</ion-item>
@@ -84,14 +80,15 @@
 			<ion-label position="stacked">Steps</ion-label>
 			<ion-textarea auto-grow formControlName="steps"></ion-textarea>
 			<ion-label color="danger" position="stacked" class="ion-text-wrap"
-					   *ngIf="steps?.dirty && steps?.invalid && steps?.errors?.required">
+				*ngIf="steps?.dirty && steps?.invalid && steps?.errors?.required">
 				steps are required
 			</ion-label>
 		</ion-item>
 
 		<app-upload-image></app-upload-image>
 
-		<ion-button expand="block" type="submit" aria-label="submit">Submit</ion-button>
+		<ion-button expand="block" type="submit" aria-label="submit">
+			Submit</ion-button>
 
 	</form>
 </ng-container>
