@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { RecipeDto } from '../../shared/models/recipe.dto.model';
 import { FEED } from '../../shared/constants/routes.const';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecipeService } from '../../core/services/recipe.service';
+import { RecipeService } from '../../services/recipe.service';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { ViewRecipePopoverComponent } from '../../components/view-recipe-popover/view-recipe-popover.component';
 import { mergeMap } from 'rxjs/operators';

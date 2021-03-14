@@ -1,6 +1,6 @@
 import {LoginPage} from './login.page';
 import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {AuthService} from '../../core/services/auth.service';
+import {AuthService} from '../../services/auth.service';
 import {FirebaseUIModule} from 'firebaseui-angular';
 import {RouterTestingModule} from '@angular/router/testing';
 import {LoginPageModule} from './login.module';

@@ -1,41 +1,51 @@
-import { createReducer, on } from '@ngrx/store';
-import {
-  loadDataBegin,
-  loadDataFailure,
-  loadDataSuccess,
-} from './category.actions';
+import { Action, createReducer, on } from '@ngrx/store';
+import * as CategoryActions from './category.actions';
 
 export interface CategoryState {
-  items: string[];
+  items: Array<string>;
   loading: boolean;
   error: any;
 }
 
 export const initialState: CategoryState = {
-  items: [],
+  items: Array<string>(),
   loading: false,
   error: null,
 };
 
-export const categoryReducer = createReducer(
+export const reducer = createReducer(
   initialState,
-  on(loadDataBegin, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-  on(loadDataSuccess, (state, { categories }) => ({
-    ...state,
-    loading: false,
-    items: categories,
-  })),
-  on(loadDataFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error: error,
-  })),
+  on(CategoryActions.GetCategoriesAction, (state: CategoryState) => state),
+  on(CategoryActions.BeginGetCategoriesAction, (state: CategoryState) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(
+    CategoryActions.SuccessGetCategoriesAction,
+    (state: CategoryState, { payload }) => {
+      return {
+        ...state,
+        items: [...payload],
+        error: null,
+        loading: false,
+      };
+    },
+  ),
+  on(CategoryActions.ErrorGetCategoriesAction, (state, error) => {
+    console.error(error);
+    return {
+      ...state,
+      loading: false,
+      error: error,
+    };
+  }),
 );
 
-export const getAllCategories = (state: CategoryState) => state.items;
-export const getLoading = (state: CategoryState) => state.loading;
-export const getError = (state: CategoryState) => state.error;
+export function CategoryReducer(
+  state: CategoryState | undefined,
+  action: Action,
+): CategoryState {
+  return reducer(state, action);
+}

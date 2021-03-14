@@ -3,8 +3,8 @@ import {ActionSheetController, AlertController, PopoverController, ToastControll
 import {EDIT, FEED} from '../../shared/constants/routes.const';
 import {RecipeDto} from '../../shared/models/recipe.dto.model';
 import {Router} from '@angular/router';
-import {RecipeService} from '../../core/services/recipe.service';
-import {ImageService} from '../../core/services/image.service';
+import {RecipeService} from '../../services/recipe.service';
+import {ImageService} from '../../services/image.service';
 
 @Component({
     selector: 'app-view-recipe-popover',

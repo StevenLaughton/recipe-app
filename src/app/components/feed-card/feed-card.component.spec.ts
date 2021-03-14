@@ -1,5 +1,5 @@
 import {FeedCardComponent} from './feed-card.component';
-import {ImageService} from '../../core/services/image.service';
+import {ImageService} from '../../services/image.service';
 import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 import {FeedCardModule} from './feed-card.module';
 

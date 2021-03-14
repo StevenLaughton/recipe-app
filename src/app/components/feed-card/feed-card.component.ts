@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ImageService } from '../../core/services/image.service';
+import { ImageService } from '../../services/image.service';
 import { Recipe } from '../../shared/models/recipe.model';
 
 @Component({

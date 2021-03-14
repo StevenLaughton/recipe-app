@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CategoryService } from '../../core/services/category.service';
+import { map } from 'rxjs/operators';
+import { CategoryState } from 'src/app/core/categories/category.reducer';
+import { getCategoriesState } from 'src/app/core/categories/category.selectors';
 import { Recipe } from '../../shared/models/recipe.model';
 
 @Component({
@@ -35,11 +38,9 @@ export class RecipeFormComponent implements OnInit {
   }
 
   constructor(
-    private readonly categoryService: CategoryService,
+    private readonly store: Store,
     private readonly formBuilder: FormBuilder,
-  ) {
-    this.categories$ = categoryService.getCategories();
-  }
+  ) {}
 
   private delimiter = '..';
   private ingredientsRegex = new RegExp(
@@ -54,8 +55,12 @@ export class RecipeFormComponent implements OnInit {
   formSubmitted = new EventEmitter<Recipe>();
 
   form: FormGroup | undefined;
-  categories$: Observable<string[]>;
   createNewCategory = false;
+
+  categories$: Observable<Array<string>> = this.store.pipe(
+    select(getCategoriesState),
+    map((state: CategoryState) => state.items),
+  );
 
   private initialiseForm(recipe: Recipe): FormGroup {
     return this.formBuilder.group({

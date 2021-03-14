@@ -16,8 +16,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ComponentsModule } from './components/components.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { categoryReducer } from './core/categories/category.reducer';
+import { CategoryReducer } from './core/categories/category.reducer';
 import { CategoryEffects } from './core/categories/category.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -41,9 +42,13 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       registrationStrategy: 'registerImmediately',
     }),
     StoreModule.forRoot({
-      category: categoryReducer,
+      categories: CategoryReducer,
     }),
     EffectsModule.forRoot([CategoryEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [
     StatusBar,

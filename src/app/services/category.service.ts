@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { RecipeDto } from '../../shared/models/recipe.dto.model';
+import { RecipeDto } from '../shared/models/recipe.dto.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

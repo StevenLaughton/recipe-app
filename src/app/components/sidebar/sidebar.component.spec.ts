@@ -1,6 +1,6 @@
 import {SidebarComponent} from './sidebar.component';
-import {AuthService} from '../../core/services/auth.service';
-import {CategoryService} from '../../core/services/category.service';
+import {AuthService} from '../../services/auth.service';
+import {CategoryService} from '../../services/category.service';
 import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
 import {SidebarModule} from './sidebar.module';
 

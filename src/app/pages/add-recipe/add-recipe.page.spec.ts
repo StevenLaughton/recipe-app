@@ -2,8 +2,8 @@ import {ToastController} from '@ionic/angular';
 
 import {AddRecipePage} from './add-recipe.page';
 import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {ImageService} from '../../core/services/image.service';
-import {RecipeService} from '../../core/services/recipe.service';
+import {ImageService} from '../../services/image.service';
+import {RecipeService} from '../../services/recipe.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AddRecipePageModule} from './add-recipe.module';
 

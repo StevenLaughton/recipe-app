@@ -1,19 +1,24 @@
 import { createAction, props } from '@ngrx/store';
 
 export enum CategoryActions {
-  LoadDataBegin = '[Categories] Load categories begin',
-  LoadDataSuccess = '[Categories] Load categories success',
-  LoadDataFailure = '[Categories] Load categories failure',
+  GetCategoriesBegin = '[Categories] - Get categories begin',
+  GetCategoriesSuccess = '[Categories] - Get categories success',
+  GetCategoriesError = '[Categories] - Get categories error',
+  GetCategories = '[Categories] - Get categories',
 }
 
-export const loadDataBegin = createAction(CategoryActions.LoadDataBegin);
+export const GetCategoriesAction = createAction(CategoryActions.GetCategories);
 
-export const loadDataSuccess = createAction(
-  CategoryActions.LoadDataSuccess,
-  props<{ categories: string[] }>(),
+export const BeginGetCategoriesAction = createAction(
+  CategoryActions.GetCategoriesBegin,
 );
 
-export const loadDataFailure = createAction(
-  CategoryActions.LoadDataFailure,
-  props<{ error: string }>(),
+export const SuccessGetCategoriesAction = createAction(
+  CategoryActions.GetCategoriesSuccess,
+  props<{ payload: Array<string> }>(),
+);
+
+export const ErrorGetCategoriesAction = createAction(
+  CategoryActions.GetCategoriesError,
+  props<Error>(),
 );

@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Recipe } from '../../shared/models/recipe.model';
 import { FEED } from '../../shared/constants/routes.const';
-import { RecipeService } from '../../core/services/recipe.service';
-import { ImageService } from '../../core/services/image.service';
+import { RecipeService } from '../../services/recipe.service';
+import { ImageService } from '../../services/image.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { tap } from 'rxjs/operators';

@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ImageService} from '../../core/services/image.service';
+import {ImageService} from '../../services/image.service';
 
 @Component({
     selector: 'app-upload-image',

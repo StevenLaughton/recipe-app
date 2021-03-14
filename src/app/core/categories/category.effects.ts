@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { CategoryService } from '../services/category.service';
-import { CategoryActions } from './category.actions';
+import { Action } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { CategoryService } from '../../services/category.service';
+import * as CategoryActions from './category.actions';
 
 @Injectable()
 export class CategoryEffects {
@@ -12,20 +13,18 @@ export class CategoryEffects {
     private categoryService: CategoryService,
   ) {}
 
-  loadCategories$ = createEffect(() =>
+  loadCategories$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.LoadDataBegin),
-      mergeMap(() =>
+      ofType(CategoryActions.BeginGetCategoriesAction),
+      switchMap(() =>
         this.categoryService.getCategories().pipe(
-          map((categories: string[]) => ({
-            type: CategoryActions.LoadDataSuccess,
-            payload: categories,
-          })),
-          catchError((error: string) =>
-            of({
-              type: CategoryActions.LoadDataFailure,
-              payload: error,
-            }),
+          map((categories: Array<string>) => {
+            return CategoryActions.SuccessGetCategoriesAction({
+              payload: categories,
+            });
+          }),
+          catchError((error: Error) =>
+            of(CategoryActions.ErrorGetCategoriesAction(error)),
           ),
         ),
       ),

@@ -3,7 +3,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {RecipeDto} from 'src/app/shared/models/recipe.dto.model';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Recipe} from '../../shared/models/recipe.model';
+import {Recipe} from '../shared/models/recipe.model';
 
 @Injectable({
   providedIn: 'root',

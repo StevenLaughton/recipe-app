@@ -10,7 +10,7 @@
 					</ion-toggle>
 				</ion-item>
 				<ion-list-header>Categories</ion-list-header>
-				<ion-menu-toggle auto-hide="true">
+				<ion-menu-toggle auto-hide="true" *ngIf="!(loading$ | async); else Loading">
 					<ion-item-group>
 						<ion-item>
 							<ion-button fill="clear" class="full-button" (click)="selectCategory(null)">
@@ -24,8 +24,15 @@
 						</ion-item>
 					</ion-item-group>
 				</ion-menu-toggle>
+				<ng-template #Loading>
+					<ion-spinner></ion-spinner>
+				</ng-template>
 			</ion-list>
 			<ion-note>28.02.2021 01</ion-note>
 		</ion-content>
 	</ion-menu>
 </ng-container>
+
+<ng-template #Loading>
+	<ion-spinner></ion-spinner>
+</ng-template>

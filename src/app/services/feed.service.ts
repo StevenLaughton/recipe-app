@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {Recipe} from '../../shared/models/recipe.model';
+import {Recipe} from '../shared/models/recipe.model';
 import {switchMap, tap} from 'rxjs/operators';
 import firebase from 'firebase';
 import CollectionReference = firebase.firestore.CollectionReference;

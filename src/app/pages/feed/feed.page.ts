@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Recipe} from '../../shared/models/recipe.model';
-import {FeedService} from '../../core/services/feed.service';
+import {FeedService} from '../../services/feed.service';
 import {Router} from '@angular/router';
 import {ActionSheetController} from '@ionic/angular';
 import {ADD, VIEW} from '../../shared/constants/routes.const';

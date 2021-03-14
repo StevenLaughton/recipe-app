@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recipe } from '../../shared/models/recipe.model';
-import { RecipeService } from '../../core/services/recipe.service';
-import { ImageService } from '../../core/services/image.service';
+import { RecipeService } from '../../services/recipe.service';
+import { ImageService } from '../../services/image.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { FEED } from '../../shared/constants/routes.const';
