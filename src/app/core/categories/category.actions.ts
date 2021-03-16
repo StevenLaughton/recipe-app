@@ -4,10 +4,7 @@ export enum CategoryActions {
   GetCategoriesBegin = '[Categories] - Get categories begin',
   GetCategoriesSuccess = '[Categories] - Get categories success',
   GetCategoriesError = '[Categories] - Get categories error',
-  GetCategories = '[Categories] - Get categories',
 }
-
-export const GetCategoriesAction = createAction(CategoryActions.GetCategories);
 
 export const BeginGetCategoriesAction = createAction(
   CategoryActions.GetCategoriesBegin,

@@ -15,7 +15,6 @@ export const initialState: CategoryState = {
 
 export const reducer = createReducer(
   initialState,
-  on(CategoryActions.GetCategoriesAction, (state: CategoryState) => state),
   on(CategoryActions.BeginGetCategoriesAction, (state: CategoryState) => {
     return {
       ...state,

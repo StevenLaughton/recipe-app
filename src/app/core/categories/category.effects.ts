@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { CategoryService } from '../../services/category.service';
 import * as CategoryActions from './category.actions';
 
@@ -18,11 +18,9 @@ export class CategoryEffects {
       ofType(CategoryActions.BeginGetCategoriesAction),
       switchMap(() =>
         this.categoryService.getCategories().pipe(
-          map((categories: Array<string>) => {
-            return CategoryActions.SuccessGetCategoriesAction({
-              payload: categories,
-            });
-          }),
+          map((categories: Array<string>) =>
+            CategoryActions.SuccessGetCategoriesAction({ payload: categories }),
+          ),
           catchError((error: Error) =>
             of(CategoryActions.ErrorGetCategoriesAction(error)),
           ),

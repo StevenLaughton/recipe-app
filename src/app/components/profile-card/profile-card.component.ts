@@ -10,7 +10,7 @@ import User = firebase.User;
 })
 export class ProfileCardComponent {
   @Input()
-  user: User | undefined;
+  user!: User | null;
 
   constructor() {}
 

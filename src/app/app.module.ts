@@ -19,6 +19,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CategoryReducer } from './core/categories/category.reducer';
 import { CategoryEffects } from './core/categories/category.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { UserEffects } from './core/users/user.effects';
+import { UserReducer } from './core/users/user.reducer';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -43,8 +45,14 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     }),
     StoreModule.forRoot({
       categories: CategoryReducer,
+      user: UserReducer,
     }),
-    EffectsModule.forRoot([CategoryEffects]),
+    EffectsModule.forRoot([CategoryEffects, UserEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    EffectsModule.forFeature([UserEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

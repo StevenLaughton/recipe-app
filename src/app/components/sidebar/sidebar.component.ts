@@ -1,15 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FeedService } from '../../services/feed.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import firebase from 'firebase';
-import User = firebase.User;
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { BeginGetCategoriesAction } from 'src/app/core/categories/category.actions';
 import { getCategoriesState } from 'src/app/core/categories/category.selectors';
 import { CategoryState } from 'src/app/core/categories/category.reducer';
 import { tap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { UserState } from 'src/app/core/users/user.reducer';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,8 +17,12 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class SidebarComponent implements OnDestroy {
   loading$ = new BehaviorSubject<boolean>(true);
-  categories$ = new BehaviorSubject<Array<string>>(['']);
-  user$: Observable<User | null>;
+  categories$ = new BehaviorSubject<ReadonlyArray<string>>(['']);
+  userState$: Observable<UserState> = of({ user: null } as unknown as UserState);
+
+  //   = this.store.pipe(
+  //   select(getUserState)
+  // );
   selectedCategory: string | null = '';
   vegetarianSelected = false;
 
@@ -29,7 +32,6 @@ export class SidebarComponent implements OnDestroy {
     private readonly store: Store,
   ) {
     this.store.dispatch(BeginGetCategoriesAction());
-    this.user$ = authService.getUser();
 
     this.store
       .pipe(

@@ -1,8 +1,8 @@
-<ng-container *ngIf="user$ | async as user">
+<ng-container *ngIf="(userState$ | async);">
 	<ion-menu contentId="main-content" type="overlay">
 		<ion-content>
 			<ion-list>
-				<app-profile-card [user]="user"></app-profile-card>
+				<!-- <app-profile-card [user]="(userState$ | async)?.user"></app-profile-card> -->
 				<ion-item>
 					<ion-label>Vegetarian</ion-label>
 					<ion-toggle slot="end" color="success" (ionChange)="toggleVegetarian()"
