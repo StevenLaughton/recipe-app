@@ -10,15 +10,13 @@ import { Recipe } from '../../shared/models/recipe.model';
 })
 export class FeedCardComponent implements OnInit {
   @Input()
-  recipe: Recipe | undefined;
+  recipe!: Recipe;
 
   imageUrl$: Observable<string | undefined> = of(undefined);
 
   constructor(private imageService: ImageService) {}
 
   async ngOnInit(): Promise<void> {
-    if (this.recipe?.id) {
-      this.imageUrl$ = this.imageService.get(this.recipe.id);
-    }
+    this.imageUrl$ = this.imageService.get(this.recipe.id);
   }
 }

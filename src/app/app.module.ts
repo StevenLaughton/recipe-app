@@ -16,11 +16,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ComponentsModule } from './components/components.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { CategoryReducer } from './core/categories/category.reducer';
-import { CategoryEffects } from './core/categories/category.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UserEffects } from './core/users/user.effects';
 import { UserReducer } from './core/users/user.reducer';
+import { RecipesEffects } from './core/recipes/recipes.effects';
+import { RecipesReducer } from './core/recipes/recipes.reducer';
+import { SaveRecipeEffects } from './core/recipes/save-recipe/save-recipe.effects';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -44,15 +45,15 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       registrationStrategy: 'registerImmediately',
     }),
     StoreModule.forRoot({
-      categories: CategoryReducer,
       user: UserReducer,
+      recipes: RecipesReducer,
     }),
-    EffectsModule.forRoot([CategoryEffects, UserEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forFeature([UserEffects]),
+    EffectsModule.forFeature([UserEffects, RecipesEffects, SaveRecipeEffects]),
+    EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

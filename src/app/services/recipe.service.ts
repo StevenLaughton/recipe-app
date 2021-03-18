@@ -1,62 +1,73 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {RecipeDto} from 'src/app/shared/models/recipe.dto.model';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {Recipe} from '../shared/models/recipe.model';
+import { Injectable } from '@angular/core';
+import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { Recipe } from '../shared/models/recipe.model';
+import firebase from 'firebase';
+import Query = firebase.firestore.Query;
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
+  private readonly recipes$: Observable<Array<Recipe>>;
+  private vegetarianFilter$: BehaviorSubject<boolean>;
+
   constructor(private db: AngularFirestore) {
+    this.vegetarianFilter$ = new BehaviorSubject<boolean>(false);
+
+    this.recipes$ = combineLatest([this.vegetarianFilter$]).pipe(
+      switchMap(([vegetarian]) =>
+        db
+          .collection<Recipe>('recipes', (ref) => {
+            let query: CollectionReference | Query = ref;
+            if (vegetarian) {
+              query = query.where('vegetarian', '==', vegetarian);
+            }
+            return query;
+          })
+          .valueChanges(),
+      ),
+    );
   }
 
-  get(id: string): Observable<Recipe | undefined> {
-    return this.db.collection('recipes')
-      .doc<Recipe>(id)
-      .valueChanges();
+  save(input: Recipe, editing: boolean): Observable<Recipe> {
+    const recipe = this.setRecipe(input, editing);
+    return of(recipe).pipe(
+      tap((rec: Recipe) => this.setDoc(rec)),
+      catchError((error) => of(error)),
+    );
   }
 
-  getDto(id: string): Observable<RecipeDto | undefined> {
-    return this.get(id)
-      .pipe(map<(Recipe | undefined), (RecipeDto | undefined)>(recipe =>
-        !!recipe ? new RecipeDto(recipe) : undefined
-      ));
+  delete(id: string): void {
+    this.db.collection('recipes').doc<Recipe>(id).delete();
   }
 
-  async addAsync(recipe: Recipe): Promise<string> {
-    recipe.id = this.db.createId();
-    await this.setDocAsync(recipe);
-    return recipe.id;
+  get(): Observable<Array<Recipe>> {
+    return this.recipes$;
   }
 
-  async updateAsync(recipe: Recipe): Promise<string> {
-    await this.setDocAsync(recipe);
-    return recipe.id;
+  filterByVegetarian(vegetarian: boolean): void {
+    this.vegetarianFilter$.next(vegetarian);
   }
 
-  async delete(id: string): Promise<boolean> {
-    try {
-      await this.db
-        .collection('recipes')
-        .doc<Recipe>(id)
-        .delete();
-      return true;
-    } catch (err) {
-      return false;
-    }
+  private setDoc(recipe: Recipe): Promise<void> {
+    return this.db
+      .collection<Recipe>('recipes')
+      .doc(recipe.id)
+      .set({ ...recipe });
   }
 
-  private async setDocAsync(recipe: Recipe): Promise<boolean> {
-    try {
-      await this.db
-        .collection<Recipe>('recipes')
-        .doc(recipe.id)
-        .set({...recipe});
-      return true;
-    } catch (err) {
-      return false;
-    }
+  private setRecipe(input: Recipe, editing: boolean): Recipe {
+    return new Recipe(
+      editing === true ? input.id : this.db.createId(),
+      input.name,
+      input.portions,
+      input.time,
+      input.category,
+      input.ingredients,
+      input.vegetarian,
+      input.steps,
+    );
   }
 }

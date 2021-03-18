@@ -1,8 +1,8 @@
-<ng-container *ngIf="(userState$ | async);">
+<ng-container *ngIf="isLoggedIn$ | async">
 	<ion-menu contentId="main-content" type="overlay">
 		<ion-content>
 			<ion-list>
-				<!-- <app-profile-card [user]="(userState$ | async)?.user"></app-profile-card> -->
+				<app-profile-card></app-profile-card>
 				<ion-item>
 					<ion-label>Vegetarian</ion-label>
 					<ion-toggle slot="end" color="success" (ionChange)="toggleVegetarian()"
@@ -10,7 +10,7 @@
 					</ion-toggle>
 				</ion-item>
 				<ion-list-header>Categories</ion-list-header>
-				<ion-menu-toggle auto-hide="true" *ngIf="!(loading$ | async); else Loading">
+				<ion-menu-toggle auto-hide="true" *ngIf="loaded$ | async; else Loading">
 					<ion-item-group>
 						<ion-item>
 							<ion-button fill="clear" class="full-button" (click)="selectCategory(null)">

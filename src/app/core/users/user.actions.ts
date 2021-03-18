@@ -5,7 +5,7 @@ export const loadUsers = createAction('[User] Load Users');
 
 export const loadUsersSuccess = createAction(
   '[User] Load Users Success',
-  props<{ data: User }>(),
+  props<{ user: User; isLoggedIn: boolean }>(),
 );
 
 export const loadUsersFailure = createAction(

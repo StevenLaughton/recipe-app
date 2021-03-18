@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { LOGIN } from 'src/app/shared/constants/routes.const';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import {Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
 import firebase from 'firebase';
@@ -12,34 +12,20 @@ import User = firebase.User;
   providedIn: 'root',
 })
 export class AuthService {
-  //   private user: BehaviorSubject<Observable<User | null>> = new BehaviorSubject<
-  //     Observable<User | null>
-  //   >(of(null));
-
   constructor(
     public afAuth: AngularFireAuth,
     public router: Router,
     public toastController: ToastController,
-  ) {
-    //this.user.next(this.afAuth.authState);
-  }
+  ) {}
 
   loadUser(): Observable<User | null> {
     return this.afAuth.authState;
   }
 
-  //   getUser(): Observable<User | null> {
-  //     return this.user
-  //       .asObservable()
-  //       .pipe(switchMap((user: Observable<User | null>) => user));
-  //   }
-
   isLoggedIn(): Observable<boolean> {
     return this.loadUser().pipe(
       take(1),
-      map((user: User | null) => {
-        return !!user;
-      }),
+      map((user: User | null) => !!user),
     );
   }
 

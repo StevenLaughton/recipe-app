@@ -1,7 +1,7 @@
-import { CategoryState } from './categories/category.reducer';
+import { RecipeState } from './recipes/recipes.reducer';
 import { UserState } from './users/user.reducer';
 
 export interface AppState {
-  categories: CategoryState;
   user: UserState;
+  recipes: RecipeState;
 }

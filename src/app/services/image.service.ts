@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { Photo } from '../shared/models/photo.model';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import { map, mergeMap } from 'rxjs/operators';
+import { last, map, mergeMap } from 'rxjs/operators';
 
 const { Camera } = Plugins;
 
@@ -21,16 +21,22 @@ export class ImageService {
       .pipe(map((ref) => ref.items.map((id) => id.name)));
   }
 
-  async add(recipeId: string): Promise<Observable<boolean>> {
+  add(id: string): Observable<boolean> {
     if (this.photo) {
-      const response = await fetch(this.photo.webviewPath);
-      const blob = await response.blob();
-
-      const task = this.afStorage.upload(`images/${recipeId}`, blob);
-      return task.percentageChanges().pipe(
-        map((percent) => {
-          return percent === 100 ? true : false;
-        }),
+      return from(fetch(this.photo.webviewPath)).pipe(
+        mergeMap((response) =>
+          from(response.blob()).pipe(
+            mergeMap((blob) =>
+              this.afStorage
+                .upload(`images/${id}`, blob)
+                .snapshotChanges()
+                .pipe(
+                  last(),
+                  map(() => true),
+                ),
+            ),
+          ),
+        ),
       );
     }
     return of(true);
@@ -38,12 +44,11 @@ export class ImageService {
 
   get(recipeId: string): Observable<string | undefined> {
     return this.imageIds$.pipe(
-      mergeMap((ids) => {
-        if (ids.includes(recipeId)) {
-          return this.afStorage.ref(`images/${recipeId}`).getDownloadURL();
-        }
-        return of(undefined);
-      }),
+      mergeMap((ids) =>
+        ids.includes(recipeId)
+          ? this.afStorage.ref(`images/${recipeId}`).getDownloadURL()
+          : of(undefined),
+      ),
     );
   }
 

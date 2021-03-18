@@ -14,7 +14,12 @@ export class UserEffects {
       ofType(UserActions.loadUsers),
       concatMap(() =>
         this.authService.loadUser().pipe(
-          map((data) => UserActions.loadUsersSuccess({ data: new User(data) })),
+          map((user) =>
+            UserActions.loadUsersSuccess({
+              user: new User(user),
+              isLoggedIn: !!user,
+            }),
+          ),
           catchError((error) => of(UserActions.loadUsersFailure({ error }))),
         ),
       ),

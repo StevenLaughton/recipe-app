@@ -3,10 +3,11 @@ import { Observable } from 'rxjs';
 import { RecipeDto } from '../../shared/models/recipe.dto.model';
 import { FEED } from '../../shared/constants/routes.const';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecipeService } from '../../services/recipe.service';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { ViewRecipePopoverComponent } from '../../components/view-recipe-popover/view-recipe-popover.component';
 import { mergeMap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { selectRecipeDto } from 'src/app/core/recipes/recipes.selectors';
 
 @Component({
   selector: 'app-view-recipe',
@@ -14,27 +15,26 @@ import { mergeMap } from 'rxjs/operators';
   styleUrls: ['./view-recipe.page.scss'],
 })
 export class ViewRecipePage implements OnInit {
-  recipe$: Observable<RecipeDto | undefined> = new Observable<RecipeDto>();
+  recipe$: Observable<RecipeDto> = new Observable<RecipeDto>();
 
   selectedPortions: number | null = null;
   multiplier = 1;
 
   constructor(
-    private readonly recipeService: RecipeService,
+    private readonly store: Store,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly toastController: ToastController,
     private readonly popover: PopoverController,
   ) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.recipe$ = this.route.paramMap.pipe(
       mergeMap((params) => {
         const id = params.get('id');
-        if (id) {
-          return this.recipeService.getDto(id);
-        }
-        return this.showError().then(() => undefined);
+        return !!id
+          ? this.store.pipe(select(selectRecipeDto, id))
+          : this.showError().then(() => new RecipeDto(undefined));
       }),
     );
   }

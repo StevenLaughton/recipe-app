@@ -7,6 +7,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { Meta, Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { loadUsers } from './core/users/user.actions';
+import { loadRecipes } from './core/recipes/recipes.actions';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   ) {
     this.initializeApp();
     this.store.dispatch(loadUsers());
+    this.store.dispatch(loadRecipes());
   }
 
   initializeApp() {

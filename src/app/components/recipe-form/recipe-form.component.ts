@@ -2,9 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { CategoryState } from 'src/app/core/categories/category.reducer';
-import { getCategoriesState } from 'src/app/core/categories/category.selectors';
+import { selectRecipeCategories } from 'src/app/core/recipes/recipes.selectors';
 import { Recipe } from '../../shared/models/recipe.model';
 
 @Component({
@@ -37,15 +35,11 @@ export class RecipeFormComponent implements OnInit {
     return this.form?.controls.steps;
   }
 
-  constructor(
-    private readonly store: Store,
-    private readonly formBuilder: FormBuilder,
-  ) {}
-
   private delimiter = '..';
   private ingredientsRegex = new RegExp(
     /((\d*\.)?\d+\s+[\w\s\d]*\s\.\.\s*)*((\d*\.)?\d+\s*[\w\s\d]*\s)/gm,
   );
+
   timeOptions = ['<15', '15', '30', '45', '60', '>60'];
 
   @Input()
@@ -58,9 +52,13 @@ export class RecipeFormComponent implements OnInit {
   createNewCategory = false;
 
   categories$: Observable<Array<string>> = this.store.pipe(
-    select(getCategoriesState),
-    map((state: CategoryState) => state.items),
+    select(selectRecipeCategories),
   );
+
+  constructor(
+    private readonly store: Store,
+    private readonly formBuilder: FormBuilder,
+  ) {}
 
   private initialiseForm(recipe: Recipe): FormGroup {
     return this.formBuilder.group({
@@ -96,6 +94,7 @@ export class RecipeFormComponent implements OnInit {
       recipeToAdd.ingredients = this.form.controls.ingredients.value
         .split(this.delimiter)
         .map((i: string) => i.trim());
+
       recipeToAdd.steps = this.form.controls.steps.value
         .split(this.delimiter)
         .map((i: string) => i.trim());
