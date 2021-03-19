@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { LOGIN } from 'src/app/shared/constants/routes.const';
-import {Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
 import firebase from 'firebase';
@@ -20,13 +20,6 @@ export class AuthService {
 
   loadUser(): Observable<User | null> {
     return this.afAuth.authState;
-  }
-
-  isLoggedIn(): Observable<boolean> {
-    return this.loadUser().pipe(
-      take(1),
-      map((user: User | null) => !!user),
-    );
   }
 
   // Sign out
