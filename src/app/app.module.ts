@@ -22,6 +22,7 @@ import { UserReducer } from './core/users/user.reducer';
 import { RecipesEffects } from './core/recipes/recipes.effects';
 import { RecipesReducer } from './core/recipes/recipes.reducer';
 import { SaveRecipeEffects } from './core/recipes/save-recipe/save-recipe.effects';
+import { DeleteRecipeEffects } from './core/recipes/delete-recipe/delete-recipe.effects';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -52,7 +53,13 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forFeature([UserEffects, RecipesEffects, SaveRecipeEffects]),
+    EffectsModule.forFeature([
+      UserEffects,
+      RecipesEffects,
+      SaveRecipeEffects,
+      DeleteRecipeEffects,
+      DeleteRecipeEffects,
+    ]),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

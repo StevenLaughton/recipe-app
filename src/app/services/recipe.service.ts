@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, from, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { Recipe } from '../shared/models/recipe.model';
 import firebase from 'firebase';
@@ -39,8 +39,8 @@ export class RecipeService {
     );
   }
 
-  delete(id: string): void {
-    this.db.collection('recipes').doc<Recipe>(id).delete();
+  delete(id: string): Observable<void> {
+    return from(this.db.collection('recipes').doc<Recipe>(id).delete());
   }
 
   get(): Observable<Array<Recipe>> {
