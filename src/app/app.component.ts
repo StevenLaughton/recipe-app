@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { AlertController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SwUpdate } from '@angular/service-worker';
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
     private swUpdate: SwUpdate,
     private titleService: Title,
     private metaService: Meta,
-    public toastController: ToastController,
     public alertController: AlertController,
     private readonly store: Store,
   ) {
@@ -53,14 +51,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async presentToast(content: string): Promise<void> {
-    const toast = await this.toastController.create({
-      message: content,
-      duration: 2000,
-    });
-    await toast.present();
-  }
-
   async presentUpdateAlert() {
     const alert = await this.alertController.create({
       header: 'Update',
@@ -75,7 +65,6 @@ export class AppComponent implements OnInit {
           text: 'Okay',
           handler: () => {
             window.location.reload();
-            this.presentToast('Updated');
           },
         },
       ],

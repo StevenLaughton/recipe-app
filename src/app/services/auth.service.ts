@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { LOGIN } from 'src/app/shared/constants/routes.const';
 import { Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
 import firebase from 'firebase';
 import User = firebase.User;

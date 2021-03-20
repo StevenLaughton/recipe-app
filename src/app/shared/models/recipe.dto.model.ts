@@ -14,7 +14,7 @@ export class RecipeDto {
   constructor(recipe: Recipe | undefined) {
     this.id = recipe?.id ?? '';
     this.name = recipe?.name ?? '';
-    this.portions = recipe?.portions ?? 0;
+    this.portions = recipe?.portions ?? 1;
     this.time = recipe?.time ?? '';
     this.category = recipe?.category ?? '';
     this.vegetarian = recipe?.vegetarian ?? false;

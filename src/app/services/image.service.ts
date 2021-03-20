@@ -52,8 +52,8 @@ export class ImageService {
     );
   }
 
-  delete(recipeId: string): void {
-    this.afStorage.ref(`images/${recipeId}`).delete();
+  delete(recipeId: string): Observable<void> {
+    return from(this.afStorage.ref(`images/${recipeId}`).delete());
   }
 
   async addToStorage(): Promise<void> {

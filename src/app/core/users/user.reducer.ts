@@ -17,10 +17,10 @@ export const initialState: UserState = {
 export const UserReducer = createReducer(
   initialState,
   on(UserActions.loadUsers, () => initialState),
-  on(UserActions.loadUsersSuccess, (_state, action) => {
+  on(UserActions.loadUsersSuccess, (state, action) => {
     return { user: action.user, isLoggedIn: action.isLoggedIn };
   }),
-  on(UserActions.loadUsersFailure, (_state, action) => {
+  on(UserActions.loadUsersFailure, (state, action) => {
     console.error(action.error);
     return initialState;
   }),
