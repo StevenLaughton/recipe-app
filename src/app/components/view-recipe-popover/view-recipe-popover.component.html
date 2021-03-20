@@ -4,27 +4,19 @@
 			<ion-icon name="person-outline" slot="start"></ion-icon>
 			Portions
 		</ion-label>
-		<ion-select interface="action-sheet"
-					[placeholder]="(inputPortions).toString()"
-					(ionChange)="calculateMultiplier()"
-					[(ngModel)]="selectedPortions">
+		<ion-select interface="action-sheet" [formControl]="portionsControl">
 			<ion-select-option *ngFor="let portion of portions" [value]="portion">{{portion}}</ion-select-option>
 		</ion-select>
 	</ion-item>
 
-	<ion-item
-			[button]="true"
-			[detail]="false"
-			(click)="navigateToEdit(recipe.id)">
+	<ion-item [button]="true" [detail]="false" (click)="navigateToEdit(recipeId)">
 		<ion-icon name="create-outline" slot="start"></ion-icon>
 		<ion-label>
 			Edit
 		</ion-label>
 	</ion-item>
 
-	<ion-item [button]="true"
-			  [detail]="false"
-			  (click)="presentDeleteAlert(recipe)">
+	<ion-item [button]="true" [detail]="false" (click)="presentDeleteAlert(recipeId)">
 		<ion-icon name="trash-outline" slot="start"></ion-icon>
 		<ion-label>
 			Delete

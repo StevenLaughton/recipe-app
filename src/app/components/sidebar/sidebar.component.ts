@@ -1,44 +1,49 @@
-import {Component} from '@angular/core';
-import {AuthService} from 'src/app/core/services/auth.service';
-import {CategoryService} from '../../core/services/category.service';
-import {FeedService} from '../../core/services/feed.service';
-import {Observable} from 'rxjs';
-import firebase from 'firebase';
-import User = firebase.User;
-
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { isLoggedIn } from 'src/app/core/users/user.selectors';
+import {
+  recipesLoaded,
+  selectRecipeCategories,
+  selectVegetarianFilter,
+} from 'src/app/core/recipes/recipes.selectors';
+import {
+  setSelectedCategory,
+  toggleFilterVegetarian,
+} from 'src/app/core/recipes/recipes.actions';
 
 @Component({
-    selector: 'app-sidebar',
-    templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss'],
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-    categories$: Observable<string[]>;
-    user$: Observable<User | null>;
-    selectedCategory: string | null = '';
-    vegetarianSelected: boolean;
+  categories$: Observable<Array<string>> = this.store.pipe(
+    select(selectRecipeCategories),
+  );
 
-    constructor(readonly authService: AuthService,
-                private readonly categoryService: CategoryService,
-                private readonly feedService: FeedService) {
-        this.categories$ = categoryService.getCategories();
-        this.user$ = authService.getUser();
-        this.vegetarianSelected = false;
-    }
+  loaded$: Observable<boolean> = this.store.pipe(select(recipesLoaded));
+  isLoggedIn$: Observable<boolean> = this.store.pipe(select(isLoggedIn));
 
-    async logout(): Promise<void> {
-        await this.authService.SignOut();
-    }
+  vegetarianSelected$: Observable<boolean> = this.store.pipe(
+    select(selectVegetarianFilter),
+  );
 
-    selectCategory(category: string | null): void {
-        console.log(`selected category: ${category}`);
-        this.selectedCategory = category;
-        this.feedService.filterByCategory(category);
-    }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly store: Store,
+  ) {}
 
-    toggleVegetarian(): void {
-        this.vegetarianSelected = !this.vegetarianSelected;
-        console.log(`Show Vegetarian: ${this.vegetarianSelected}`);
-        this.feedService.filterByVegetarian(this.vegetarianSelected);
-    }
+  async logout(): Promise<void> {
+    await this.authService.SignOut();
+  }
+
+  selectCategory(category: string | null): void {
+    this.store.dispatch(setSelectedCategory({ category }));
+  }
+
+  toggleVegetarian(): void {
+    this.store.dispatch(toggleFilterVegetarian());
+  }
 }

@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
-import firebase from 'firebase';
-import User = firebase.User;
-
+import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectCurrentUser } from 'src/app/core/users/user.selectors';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-profile-card',
@@ -9,9 +10,7 @@ import User = firebase.User;
   styleUrls: ['./profile-card.component.scss'],
 })
 export class ProfileCardComponent {
-  @Input()
-  user: User | undefined;
+  user$: Observable<User> = this.store.pipe(select(selectCurrentUser));
 
-  constructor() {}
-
+  constructor(private readonly store: Store) {}
 }

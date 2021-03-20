@@ -2,9 +2,9 @@ import {ActionSheetController, IonRouterOutlet} from '@ionic/angular';
 
 import {FeedPage} from './feed.page';
 import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {FeedService} from '../../core/services/feed.service';
+import {FeedService} from '../../services/feed.service';
 import {Router} from '@angular/router';
-import {CategoryService} from '../../core/services/category.service';
+import {CategoryService} from '../../services/category.service';
 import {FeedPageModule} from './feed.module';
 
 describe('FeedPage', () => {

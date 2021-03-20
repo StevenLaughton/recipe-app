@@ -1,23 +1,17 @@
-<ng-container *ngIf="user$ | async as user">
+<ng-container *ngIf="isLoggedIn$ | async">
 	<ion-menu contentId="main-content" type="overlay">
 		<ion-content>
 			<ion-list>
-				<app-profile-card [user]="user"></app-profile-card>
-
+				<app-profile-card></app-profile-card>
 				<ion-item>
-					<ion-label >Vegetarian</ion-label>
-					<ion-toggle slot="end" color="success"
-								(ionChange)="toggleVegetarian()"
-								[checked]="vegetarianSelected"></ion-toggle>
+					<ion-label>Vegetarian</ion-label>
+					<ion-toggle slot="end" color="success" (ionChange)="toggleVegetarian()"
+						[checked]="vegetarianSelected$ | async">
+					</ion-toggle>
 				</ion-item>
-				
-
-
 				<ion-list-header>Categories</ion-list-header>
-
-				<ion-menu-toggle auto-hide="true">
+				<ion-menu-toggle auto-hide="true" *ngIf="loaded$ | async; else Loading">
 					<ion-item-group>
-
 						<ion-item>
 							<ion-button fill="clear" class="full-button" (click)="selectCategory(null)">
 								All
@@ -29,10 +23,16 @@
 							</ion-button>
 						</ion-item>
 					</ion-item-group>
-
 				</ion-menu-toggle>
+				<ng-template #Loading>
+					<ion-spinner></ion-spinner>
+				</ng-template>
 			</ion-list>
-			<ion-note>16.01.2021 01</ion-note>
+			<ion-note>20.03.2021 01</ion-note>
 		</ion-content>
 	</ion-menu>
 </ng-container>
+
+<ng-template #Loading>
+	<ion-spinner></ion-spinner>
+</ng-template>

@@ -15,18 +15,17 @@
 <app-sidebar></app-sidebar>
 
 <ion-content [fullscreen]="true">
-		<ng-container *ngIf="recipes$; else Loading">
-	<ion-grid>
-		<ion-row>
-			<ion-col sizeLg="4" sizeMd="6" sizeXs="12"
-					 *ngFor="let recipe of recipes$ | async; trackBy:trackByFunction">
-				<app-feed-card (click)="goToRecipe(recipe)"
-							   [recipe]="recipe">
-				</app-feed-card>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
-		</ng-container>
+	<ng-container *ngIf="loaded$ | async; else Loading">
+		<ion-grid>
+			<ion-row>
+				<ion-col sizeLg="4" sizeMd="6" sizeXs="12"
+					*ngFor="let recipe of recipes$ | async; trackBy:trackByFunction">
+					<app-feed-card (click)="goToRecipe(recipe)" [recipe]="recipe">
+					</app-feed-card>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ng-container>
 </ion-content>
 
 
@@ -52,4 +51,3 @@
 		</ion-card>
 	</ion-col>
 </ng-template>
-

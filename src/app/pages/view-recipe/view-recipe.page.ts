@@ -1,66 +1,68 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {RecipeDto} from '../../shared/models/recipe.dto.model';
-import {FEED} from '../../shared/constants/routes.const';
-import {ActivatedRoute, Router} from '@angular/router';
-import {RecipeService} from '../../core/services/recipe.service';
-import {PopoverController, ToastController} from '@ionic/angular';
-import {ViewRecipePopoverComponent} from '../../components/view-recipe-popover/view-recipe-popover.component';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { RecipeDto } from '../../shared/models/recipe.dto.model';
+import { ActivatedRoute } from '@angular/router';
+import { PopoverController } from '@ionic/angular';
+import { ViewRecipePopoverComponent } from '../../components/view-recipe-popover/view-recipe-popover.component';
+import { mergeMap, tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { selectRecipeDto } from 'src/app/core/recipes/recipes.selectors';
+import {
+  removeSelectedRecipe,
+  setSelectedRecipe,
+} from 'src/app/core/recipes/selected-recipe/selected-recipe.actions';
+import { selectPortionsMultiplier } from 'src/app/core/recipes/selected-recipe/selected-recipe.selectors';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-    selector: 'app-view-recipe',
-    templateUrl: './view-recipe.page.html',
-    styleUrls: ['./view-recipe.page.scss'],
+  selector: 'app-view-recipe',
+  templateUrl: './view-recipe.page.html',
+  styleUrls: ['./view-recipe.page.scss'],
 })
-export class ViewRecipePage implements OnInit {
-    recipe$: Observable<RecipeDto | undefined> = new Observable<RecipeDto>();
+export class ViewRecipePage implements OnInit, OnDestroy {
+  recipe$: Observable<RecipeDto> = new Observable<RecipeDto>();
 
-    selectedPortions: number | null = null;
-    multiplier = 1;
+  multiplier$: Observable<number> = this.store.select(selectPortionsMultiplier);
 
-    constructor(
-        private readonly recipeService: RecipeService,
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly toastController: ToastController,
-        private readonly popover: PopoverController
-    ) {
-    }
+  constructor(
+    private readonly store: Store,
+    private readonly route: ActivatedRoute,
+    private readonly toastService: ToastService,
+    private readonly popover: PopoverController,
+  ) {}
 
-    async ngOnInit(): Promise<void> {
-        this.route.paramMap.subscribe(async (params) => {
-            const id = params.get('id');
-            if (id) {
-                this.recipe$ = this.recipeService.getDto(id);
-            } else {
-                const toast = await this.toastController.create({
-                    message: 'An error occurred getting the recipe',
-                    duration: 2000
-                });
-                await toast.present();
-                await this.router.navigate([FEED]);
-            }
-        });
-    }
+  ngOnDestroy(): void {
+    this.store.dispatch(removeSelectedRecipe());
+  }
 
-    async presentPopover(ev: Event, recipe: RecipeDto) {
-        const popover = await this.popover.create({
-            component: ViewRecipePopoverComponent,
-            cssClass: 'popover-content',
-            event: ev,
-            componentProps: {
-                recipe,
-                inputPortions: this.selectedPortions ?? recipe.portions
-            },
-        });
+  ngOnInit(): void {
+    this.recipe$ = this.route.paramMap.pipe(
+      mergeMap((params) => {
+        const id = params.get('id');
+        return !!id
+          ? this.store.pipe(
+              select(selectRecipeDto, id),
+              tap((recipe) =>
+                this.store.dispatch(setSelectedRecipe({ recipe })),
+              ),
+            )
+          : this.toastService
+              .showMessage('An error occurred getting the recipe')
+              .then(() => new RecipeDto(undefined));
+      }),
+    );
+  }
 
-        popover.onDidDismiss().then(data => {
-            if (data.role === 'portions') {
-                this.multiplier = data.data / recipe.portions;
-                this.selectedPortions = data.data;
-            }
-        });
+  async presentPopover(ev: Event, recipe: RecipeDto) {
+    const popover = await this.popover.create({
+      component: ViewRecipePopoverComponent,
+      cssClass: 'popover-content',
+      event: ev,
+      componentProps: {
+        recipeId: recipe.id,
+      },
+    });
 
-        return await popover.present();
-    }
+    return await popover.present();
+  }
 }

@@ -1,28 +1,23 @@
-import {SidebarComponent} from './sidebar.component';
-import {AuthService} from '../../core/services/auth.service';
-import {CategoryService} from '../../core/services/category.service';
-import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {SidebarModule} from './sidebar.module';
+import { SidebarComponent } from './sidebar.component';
+import { AuthService } from '../../services/auth.service';
+import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
+import { SidebarModule } from './sidebar.module';
 
 describe('SidebarComponent', () => {
-    let component: SidebarComponent;
-    let fixture: MockedComponentFixture<SidebarComponent>;
+  let component: SidebarComponent;
+  let fixture: MockedComponentFixture<SidebarComponent>;
 
-    beforeEach(async () =>
-        MockBuilder(SidebarComponent, SidebarModule)
-            .mock(AuthService)
-            .mock(CategoryService)
-    );
+  beforeEach(async () =>
+    MockBuilder(SidebarComponent, SidebarModule).mock(AuthService),
+  );
 
-    beforeEach(() => {
-        fixture = MockRender(SidebarComponent);
-        component = fixture.point.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = MockRender(SidebarComponent);
+    component = fixture.point.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
-
-

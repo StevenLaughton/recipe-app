@@ -1,51 +1,41 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Recipe} from '../../shared/models/recipe.model';
-import {RecipeService} from '../../core/services/recipe.service';
-import {ImageService} from '../../core/services/image.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ToastController} from '@ionic/angular';
-import {FEED} from '../../shared/constants/routes.const';
-import {take} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Recipe } from '../../shared/models/recipe.model';
+import { ActivatedRoute } from '@angular/router';
+import { mergeMap } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { selectRecipe } from 'src/app/core/recipes/recipes.selectors';
+import { saveRecipe } from 'src/app/core/recipes/save-recipe/save-recipe.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-    selector: 'app-edit-recipe',
-    templateUrl: './edit-recipe.page.html',
-    styleUrls: ['./edit-recipe.page.scss'],
+  selector: 'app-edit-recipe',
+  templateUrl: './edit-recipe.page.html',
+  styleUrls: ['./edit-recipe.page.scss'],
 })
 export class EditRecipePage implements OnInit {
-    recipe$: Observable<Recipe | undefined> | undefined;
+  recipe$: Observable<Recipe | undefined> = of(undefined);
 
-    constructor(private readonly recipeService: RecipeService,
-                private readonly imageService: ImageService,
-                private readonly router: Router,
-                private readonly route: ActivatedRoute,
-                private readonly toastController: ToastController) {
-    }
+  constructor(
+    private readonly store: Store,
+    private readonly route: ActivatedRoute,
+    private readonly toastService: ToastService,
+  ) {}
 
-    ngOnInit() {
-        this.route.paramMap
-            .pipe(take(1))
-            .subscribe((params) => {
-                const id = params.get('id');
-                if (id) {
-                    this.recipe$ = this.recipeService.get(id);
-                }
-            });
-    }
+  ngOnInit() {
+    this.recipe$ = this.route.paramMap.pipe(
+      mergeMap((params) => {
+        const id = params.get('id');
+        return !!id
+          ? this.store.pipe(select(selectRecipe, id))
+          : this.toastService
+              .showMessage('An error occurred getting the recipe')
+              .then(() => undefined);
+      }),
+    );
+  }
 
-    async saveRecipe(recipe: Recipe): Promise<void> {
-        this.recipeService.updateAsync(recipe).then(async id => {
-            await this.imageService.add(id);
-
-            const toast = await this.toastController.create({
-                message: 'Recipe Updated',
-                duration: 2000
-            });
-
-            await toast.present();
-
-            await this.router.navigate([FEED]);
-        });
-    }
+  saveRecipe(recipe: Recipe): void {
+    this.store.dispatch(saveRecipe({ recipe: recipe, editing: true }));
+  }
 }

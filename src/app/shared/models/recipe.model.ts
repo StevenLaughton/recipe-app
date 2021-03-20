@@ -16,7 +16,7 @@ export class Recipe {
     category?: string,
     ingredients?: string[],
     vegetarian?: boolean,
-    steps?: string[]
+    steps?: string[],
   ) {
     this.id = id ?? '';
     this.name = name ?? '';
