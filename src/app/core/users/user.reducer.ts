@@ -24,4 +24,11 @@ export const UserReducer = createReducer(
     console.error(action.error);
     return initialState;
   }),
+  on(UserActions.signOutSuccess, () => {
+    return initialState;
+  }),
+  on(UserActions.signOutFailure, (state, action) => {
+    console.error(action.error);
+    return state;
+  }),
 );

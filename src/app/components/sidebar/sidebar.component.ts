@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { isLoggedIn } from 'src/app/core/users/user.selectors';
@@ -12,6 +11,7 @@ import {
   setSelectedCategory,
   toggleFilterVegetarian,
 } from 'src/app/core/recipes/recipes.actions';
+import { signOut } from 'src/app/core/users/user.actions';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,13 +30,10 @@ export class SidebarComponent {
     select(selectVegetarianFilter),
   );
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly store: Store,
-  ) {}
+  constructor(private readonly store: Store) {}
 
-  async logout(): Promise<void> {
-    await this.authService.SignOut();
+  logout(): void {
+    this.store.dispatch(signOut());
   }
 
   selectCategory(category: string | null): void {
