@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { EDIT } from '../../shared/constants/routes.const';
 import { Router } from '@angular/router';

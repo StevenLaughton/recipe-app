@@ -17,3 +17,7 @@ export const setSelectedCategory = createAction(
   '[Recipes] Set Selected Category',
   props<{ category: string | null }>(),
 );
+
+export const toggleFilterVegetarian = createAction(
+  '[Recipes] Toggle Filter Vegetarian',
+);

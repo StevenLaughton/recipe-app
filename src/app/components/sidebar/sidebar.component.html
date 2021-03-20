@@ -6,7 +6,7 @@
 				<ion-item>
 					<ion-label>Vegetarian</ion-label>
 					<ion-toggle slot="end" color="success" (ionChange)="toggleVegetarian()"
-						[checked]="vegetarianSelected">
+						[checked]="vegetarianSelected$ | async">
 					</ion-toggle>
 				</ion-item>
 				<ion-list-header>Categories</ion-list-header>
@@ -28,7 +28,7 @@
 					<ion-spinner></ion-spinner>
 				</ng-template>
 			</ion-list>
-			<ion-note>20.03.2021</ion-note>
+			<ion-note>20.03.2021 01</ion-note>
 		</ion-content>
 	</ion-menu>
 </ng-container>

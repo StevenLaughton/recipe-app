@@ -13,7 +13,7 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(UserActions.loadUsers),
       concatMap(() =>
-        this.authService.loadUser().pipe(
+        this.authService.getUser().pipe(
           map((user) =>
             UserActions.loadUsersSuccess({
               user: new User(user),

@@ -55,3 +55,8 @@ export const selectRecipeDto = createSelector(
   selectRecipeEntities,
   (recipes: Dictionary<Recipe>, id: string) => new RecipeDto(recipes[id]),
 );
+
+export const selectVegetarianFilter = createSelector(
+  selectRecipesState,
+  fromRecipes.getVegetarianFilter,
+);

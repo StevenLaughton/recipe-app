@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
-import { BehaviorSubject, combineLatest, from, Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { Recipe } from '../shared/models/recipe.model';
 import firebase from 'firebase';
 import Query = firebase.firestore.Query;
+import { selectVegetarianFilter } from '../core/recipes/recipes.selectors';
+import { select, Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
   private readonly recipes$: Observable<Array<Recipe>>;
-  private vegetarianFilter$: BehaviorSubject<boolean>;
+  private vegetarianFilter$: Observable<boolean> = this.store.pipe(
+    select(selectVegetarianFilter),
+  );
 
-  constructor(private db: AngularFirestore) {
-    this.vegetarianFilter$ = new BehaviorSubject<boolean>(false);
-
-    this.recipes$ = combineLatest([this.vegetarianFilter$]).pipe(
-      switchMap(([vegetarian]) =>
+  constructor(
+    private readonly db: AngularFirestore,
+    private readonly store: Store,
+  ) {
+    this.recipes$ = this.vegetarianFilter$.pipe(
+      switchMap((vegetarian) =>
         db
           .collection<Recipe>('recipes', (ref) => {
             let query: CollectionReference | Query = ref;
-            if (vegetarian) {
-              query = query.where('vegetarian', '==', vegetarian);
-            }
-            return query;
+            return vegetarian
+              ? (query = query.where('vegetarian', '==', vegetarian))
+              : query;
           })
           .valueChanges(),
       ),
@@ -45,10 +49,6 @@ export class RecipeService {
 
   get(): Observable<Array<Recipe>> {
     return this.recipes$;
-  }
-
-  filterByVegetarian(vegetarian: boolean): void {
-    this.vegetarianFilter$.next(vegetarian);
   }
 
   private setDoc(recipe: Recipe): Promise<void> {

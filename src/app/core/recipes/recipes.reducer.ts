@@ -8,6 +8,7 @@ export const recipesFeatureKey = 'recipes';
 export interface RecipeState extends EntityState<Recipe> {
   isLoaded: boolean;
   selectedCategory: string | null;
+  filterVegetarian: boolean;
 }
 
 export const adapter: EntityAdapter<Recipe> = createEntityAdapter<Recipe>();
@@ -15,6 +16,7 @@ export const adapter: EntityAdapter<Recipe> = createEntityAdapter<Recipe>();
 export const initialState: RecipeState = adapter.getInitialState({
   isLoaded: false,
   selectedCategory: null,
+  filterVegetarian: false,
 });
 
 export const RecipesReducer = createReducer(
@@ -26,6 +28,7 @@ export const RecipesReducer = createReducer(
       ...state,
       isLoaded: true,
       selectedCategory: state.selectedCategory,
+      filterVegetarian: state.filterVegetarian,
     });
   }),
   on(RecipesActions.loadRecipesFailure, (state, action) => {
@@ -34,6 +37,7 @@ export const RecipesReducer = createReducer(
       ...state,
       isLoaded: true,
       selectedCategory: state.selectedCategory,
+      filterVegetarian: state.filterVegetarian,
     });
   }),
   on(RecipesActions.setSelectedCategory, (state, action) => {
@@ -41,14 +45,26 @@ export const RecipesReducer = createReducer(
       ...state,
       isLoaded: state.isLoaded,
       selectedCategory: action.category,
+      filterVegetarian: state.filterVegetarian,
     };
-  })
+  }),
+  on(RecipesActions.toggleFilterVegetarian, (state, action) => {
+    return {
+      ...state,
+      isLoaded: state.isLoaded,
+      selectedCategory: state.selectedCategory,
+      filterVegetarian: !state.filterVegetarian,
+    };
+  }),
 );
 
 export const getIsLoaded = (state: RecipeState) => state.isLoaded;
 
 export const getSelectedCategory = (state: RecipeState) =>
   state.selectedCategory;
+
+export const getVegetarianFilter = (state: RecipeState) =>
+  state.filterVegetarian;
 
 export const selectUserIds = adapter.getSelectors().selectIds;
 

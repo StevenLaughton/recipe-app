@@ -17,7 +17,7 @@ export class AuthService {
     public toastController: ToastController,
   ) {}
 
-  loadUser(): Observable<User | null> {
+  getUser(): Observable<User | null> {
     return this.afAuth.authState;
   }
 

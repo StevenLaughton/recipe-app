@@ -6,9 +6,12 @@ import { isLoggedIn } from 'src/app/core/users/user.selectors';
 import {
   recipesLoaded,
   selectRecipeCategories,
+  selectVegetarianFilter,
 } from 'src/app/core/recipes/recipes.selectors';
-import { setSelectedCategory } from 'src/app/core/recipes/recipes.actions';
-import { RecipeService } from 'src/app/services/recipe.service';
+import {
+  setSelectedCategory,
+  toggleFilterVegetarian,
+} from 'src/app/core/recipes/recipes.actions';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,14 +22,16 @@ export class SidebarComponent {
   categories$: Observable<Array<string>> = this.store.pipe(
     select(selectRecipeCategories),
   );
+
   loaded$: Observable<boolean> = this.store.pipe(select(recipesLoaded));
   isLoggedIn$: Observable<boolean> = this.store.pipe(select(isLoggedIn));
 
-  vegetarianSelected = false;
+  vegetarianSelected$: Observable<boolean> = this.store.pipe(
+    select(selectVegetarianFilter),
+  );
 
   constructor(
     private readonly authService: AuthService,
-    private readonly recipeService: RecipeService,
     private readonly store: Store,
   ) {}
 
@@ -39,7 +44,6 @@ export class SidebarComponent {
   }
 
   toggleVegetarian(): void {
-    this.vegetarianSelected = !this.vegetarianSelected;
-    this.recipeService.filterByVegetarian(this.vegetarianSelected);
+    this.store.dispatch(toggleFilterVegetarian());
   }
 }
