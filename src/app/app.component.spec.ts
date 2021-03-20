@@ -1,5 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {async, TestBed} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
@@ -18,7 +18,7 @@ describe('AppComponent', () => {
     let platformSpy: Platform;
     let swUpdateSpy: SwUpdate;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
         splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
         swUpdateSpy = jasmine.createSpyObj('SwUpdate', ['isEnabled', 'activateUpdate', 'checkForUpdate']);
