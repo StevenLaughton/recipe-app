@@ -58,14 +58,6 @@ export const RecipesReducer = createReducer(
   }),
 );
 
-export const getIsLoaded = (state: RecipeState) => state.isLoaded;
-
-export const getSelectedCategory = (state: RecipeState) =>
-  state.selectedCategory;
-
-export const getVegetarianFilter = (state: RecipeState) =>
-  state.filterVegetarian;
-
 export const selectUserIds = adapter.getSelectors().selectIds;
 
 export const selectRecipeEntities = adapter.getSelectors().selectEntities;

@@ -6,9 +6,6 @@ import { of } from 'rxjs';
 import * as DeleteRecipeActions from './delete-recipe.actions';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { ImageService } from 'src/app/services/image.service';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { FEED } from 'src/app/shared/constants/routes.const';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Injectable()
@@ -21,7 +18,7 @@ export class DeleteRecipeEffects {
         this.recipeService.delete(data.recipeId),
       ]),
       map(() => DeleteRecipeActions.deleteRecipeSuccess()),
-      tap(() => this.toastService.showMessage('Recipe Deleted')),
+      tap(() => this.toastService.showMessageAndReturnToFeed('Recipe Deleted')),
       catchError((error) =>
         of(DeleteRecipeActions.deleteRecipeFailure({ error })),
       ),

@@ -52,7 +52,7 @@ export class UserEffects {
   ) {}
 
   async successMessage(): Promise<void> {
+    await this.toastService.showMessage('Logged Out');
     await this.router.navigate([LOGIN]);
-    this.toastService.showMessage('Logged Out');
   }
 }

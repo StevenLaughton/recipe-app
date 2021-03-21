@@ -12,12 +12,20 @@ export class ToastService {
     private readonly toastController: ToastController,
   ) {}
 
-  public async showMessage(message: string): Promise<void> {
+  public async showMessageAndReturnToFeed(message: string): Promise<void> {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
     });
     await toast.present();
     await this.router.navigate([FEED]);
+  }
+
+  public async showMessage(message: string): Promise<void> {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+    });
+    await toast.present();
   }
 }

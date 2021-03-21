@@ -10,7 +10,7 @@ export const selectRecipesState = createFeatureSelector<fromRecipes.RecipeState>
 
 export const recipesLoaded = createSelector(
   selectRecipesState,
-  fromRecipes.getIsLoaded,
+  (recipe: fromRecipes.RecipeState) => recipe.isLoaded,
 );
 
 export const selectRecipes = createSelector(
@@ -20,7 +20,7 @@ export const selectRecipes = createSelector(
 
 export const selectCategory = createSelector(
   selectRecipesState,
-  fromRecipes.getSelectedCategory,
+  (recipe: fromRecipes.RecipeState) => recipe.selectedCategory,
 );
 
 export const selectRecipesWithCategory = createSelector(
@@ -35,10 +35,9 @@ export const selectRecipesWithCategory = createSelector(
 
 export const selectRecipeCategories = createSelector(
   selectRecipes,
-  (recipes: Array<Recipe>) =>
-    recipes
-      .map<string>((recipeDto: Recipe) => recipeDto.category)
-      .filter((value, index, self) => self.indexOf(value) === index),
+  (recipes: Array<Recipe>) => [
+    ...new Set(recipes.map((recipe: Recipe) => recipe.category)),
+  ],
 );
 
 export const selectRecipeEntities = createSelector(
@@ -58,5 +57,5 @@ export const selectRecipeDto = createSelector(
 
 export const selectVegetarianFilter = createSelector(
   selectRecipesState,
-  fromRecipes.getVegetarianFilter,
+  (recipe: fromRecipes.RecipeState) => recipe.filterVegetarian,
 );

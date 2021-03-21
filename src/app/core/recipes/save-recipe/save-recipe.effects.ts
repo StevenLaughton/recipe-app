@@ -3,11 +3,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as SaveRecipeActions from './save-recipe.actions';
-import { ImageService } from 'src/app/services/image.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { Router } from '@angular/router';
-import { LOGIN } from 'src/app/shared/constants/routes.const';
+import * as ImageActions from '../../images/images.actions';
 
 @Injectable()
 export class SaveRecipeEffects {
@@ -16,11 +14,10 @@ export class SaveRecipeEffects {
       ofType(SaveRecipeActions.saveRecipe),
       concatMap((data) =>
         this.recipeService.save(data.recipe, data.editing).pipe(
-          concatMap((recipe) =>
-            this.imageService.add(recipe.id).pipe(
-              map(() => SaveRecipeActions.saveRecipeSuccess()),
-              tap(() => this.toastService.showMessage('Recipe Saved')),
-            ),
+          map((recipe) => ImageActions.upload({ storageId: recipe.id })),
+          tap(() => SaveRecipeActions.saveRecipeSuccess()),
+          tap(() =>
+            this.toastService.showMessageAndReturnToFeed('Recipe Saved'),
           ),
           catchError((error) =>
             of(SaveRecipeActions.saveRecipeFailure({ error })),
@@ -31,9 +28,8 @@ export class SaveRecipeEffects {
   });
 
   constructor(
-    private actions$: Actions,
+    private readonly actions$: Actions,
     private readonly recipeService: RecipeService,
-    private readonly imageService: ImageService,
     private readonly toastService: ToastService,
   ) {}
 }

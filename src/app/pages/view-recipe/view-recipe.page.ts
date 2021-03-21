@@ -47,7 +47,9 @@ export class ViewRecipePage implements OnInit, OnDestroy {
               ),
             )
           : this.toastService
-              .showMessage('An error occurred getting the recipe')
+              .showMessageAndReturnToFeed(
+                'An error occurred getting the recipe',
+              )
               .then(() => new RecipeDto(undefined));
       }),
     );

@@ -4,7 +4,8 @@
 			<ion-col size="6" class="no-padding">
 				<ng-container *ngIf="hasImage$ | async; let url; else NoImage">
 					<ion-thumbnail>
-						<ion-img [src]="imagePath | getDownloadURL" alt="Recipe Image"></ion-img>
+						<ion-img [src]="imagePath | getDownloadURL" alt="Recipe Image">
+						</ion-img>
 					</ion-thumbnail>
 				</ng-container>
 				<ng-template #NoImage>

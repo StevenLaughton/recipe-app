@@ -16,9 +16,9 @@ export class FeedCardComponent implements OnInit {
   hasImage$: Observable<boolean> = of(false);
 
   imagePath: string = '';
-  constructor(private imageService: ImageService) {}
+  constructor(private readonly imageService: ImageService) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.hasImage$ = this.imageService.hasImage(this.recipe.id);
     this.imagePath = `images/${this.recipe.id}`;
   }

@@ -29,7 +29,9 @@ export class EditRecipePage implements OnInit {
         return !!id
           ? this.store.pipe(select(selectRecipe, id))
           : this.toastService
-              .showMessage('An error occurred getting the recipe')
+              .showMessageAndReturnToFeed(
+                'An error occurred getting the recipe',
+              )
               .then(() => undefined);
       }),
     );
