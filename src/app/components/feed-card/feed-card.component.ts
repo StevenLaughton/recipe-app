@@ -13,10 +13,13 @@ export class FeedCardComponent implements OnInit {
   recipe!: Recipe;
 
   imageUrl$: Observable<string | undefined> = of(undefined);
+  hasImage$: Observable<boolean> = of(false);
 
+  imagePath: string = '';
   constructor(private imageService: ImageService) {}
 
   async ngOnInit(): Promise<void> {
-    this.imageUrl$ = this.imageService.get(this.recipe.id);
+    this.hasImage$ = this.imageService.hasImage(this.recipe.id);
+    this.imagePath = `images/${this.recipe.id}`;
   }
 }

@@ -42,13 +42,9 @@ export class ImageService {
     return of(true);
   }
 
-  get(recipeId: string): Observable<string | undefined> {
+  hasImage(recipeId: string): Observable<boolean> {
     return this.imageIds$.pipe(
-      mergeMap((ids) =>
-        ids.includes(recipeId)
-          ? this.afStorage.ref(`images/${recipeId}`).getDownloadURL()
-          : of(undefined),
-      ),
+      map((ids) => (ids.includes(recipeId) ? true : false)),
     );
   }
 

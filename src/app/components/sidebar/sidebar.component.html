@@ -5,11 +5,9 @@
 				<app-profile-card></app-profile-card>
 				<ion-item>
 					<ion-label>Vegetarian</ion-label>
-					<ng-container *ngIf="!!(vegetarianSelected$ | async)">
-						<ion-toggle slot="end" color="success" (ionChange)="toggleVegetarian()"
-							[checked]="vegetarianSelected$ | async ">
-						</ion-toggle>
-					</ng-container>
+					<ion-toggle slot="end" color="success" (ionChange)="toggleVegetarian()"
+						[checked]="vegetarianSelected$ | async ">
+					</ion-toggle>
 				</ion-item>
 				<ion-list-header>Categories</ion-list-header>
 				<ion-menu-toggle auto-hide="true" *ngIf="loaded$ | async; else Loading">
