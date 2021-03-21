@@ -32,6 +32,6 @@ export class DeleteRecipeEffects {
     private actions$: Actions,
     private readonly recipeService: RecipeService,
     private readonly imageService: ImageService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
   ) {}
 }

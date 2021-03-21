@@ -12,3 +12,12 @@ export const loadUsersFailure = createAction(
   '[User] Load Users Failure',
   props<{ error: string }>(),
 );
+
+export const signOut = createAction('[User] Sign Out');
+
+export const signOutSuccess = createAction('[User] Sign Out Success');
+
+export const signOutFailure = createAction(
+  '[User] LSign Out Failure',
+  props<{ error: string }>(),
+);
