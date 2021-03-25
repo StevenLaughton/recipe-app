@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { FEED } from '../shared/constants/routes.const';
+import { AppRoutes } from '../shared/constants/routes.const';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class ToastService {
       duration: 2000,
     });
     await toast.present();
-    await this.router.navigate([FEED]);
+    await this.router.navigate([AppRoutes.Feed]);
   }
 
   public async showMessage(message: string): Promise<void> {

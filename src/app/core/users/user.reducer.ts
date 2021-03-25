@@ -16,15 +16,12 @@ export const initialState: UserState = {
 
 export const UserReducer = createReducer(
   initialState,
-  on(UserActions.loadUsers, () => initialState),
+  on(UserActions.loadUsers, UserActions.signOutSuccess, () => initialState),
   on(UserActions.loadUsersSuccess, (state, action) => {
     return { user: action.user, isLoggedIn: action.isLoggedIn };
   }),
   on(UserActions.loadUsersFailure, (state, action) => {
     console.error(action.error);
-    return initialState;
-  }),
-  on(UserActions.signOutSuccess, () => {
     return initialState;
   }),
   on(UserActions.signOutFailure, (state, action) => {

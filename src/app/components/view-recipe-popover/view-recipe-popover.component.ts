@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, PopoverController } from '@ionic/angular';
-import { EDIT } from '../../shared/constants/routes.const';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { deleteRecipe } from 'src/app/core/recipes/delete-recipe/delete-recipe.actions';
+import * as DeleteRecipeActions from 'src/app/core/recipes/delete-recipe/delete-recipe.actions';
 import { take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { setDisplayedPortions } from 'src/app/core/recipes/selected-recipe/selected-recipe.actions';
 import { selectDisplayedPortions } from 'src/app/core/recipes/selected-recipe/selected-recipe.selectors';
+import { AppRoutes } from 'src/app/shared/constants/routes.const';
 
 @Component({
   selector: 'app-view-recipe-popover',
@@ -51,7 +51,7 @@ export class ViewRecipePopoverComponent implements OnInit {
 
   async navigateToEdit(recipeId: string): Promise<void> {
     await this.popover.dismiss();
-    await this.router.navigate([EDIT, recipeId]);
+    await this.router.navigate([AppRoutes.Edit, recipeId]);
   }
 
   async presentDeleteAlert(recipeId: string) {
@@ -67,7 +67,9 @@ export class ViewRecipePopoverComponent implements OnInit {
         {
           text: 'Okay',
           handler: () => {
-            this.store.dispatch(deleteRecipe({ recipeId: recipeId }));
+            this.store.dispatch(
+              DeleteRecipeActions.begin({ recipeId: recipeId }),
+            );
           },
         },
       ],

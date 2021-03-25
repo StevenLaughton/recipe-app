@@ -10,7 +10,7 @@ import { User } from 'src/app/shared/models/user.model';
   styleUrls: ['./profile-card.component.scss'],
 })
 export class ProfileCardComponent {
-  user$: Observable<User> = this.store.pipe(select(selectCurrentUser));
+  user$: Observable<User> = this.store.select(selectCurrentUser);
 
   constructor(private readonly store: Store) {}
 }

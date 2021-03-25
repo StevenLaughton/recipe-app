@@ -1,7 +1,9 @@
-export const BASE = '';
-export const LOGIN = 'login';
-export const FEED = 'feed';
-export const CREATE = 'create';
-export const ADD = 'add-recipe';
-export const VIEW = 'view';
-export const EDIT = 'edit';
+export enum AppRoutes {
+  Base = '',
+  Login = 'login',
+  Feed = 'feed',
+  Create = 'create',
+  Add = 'add-recipe',
+  View = 'view',
+  Edit = 'edit',
+}

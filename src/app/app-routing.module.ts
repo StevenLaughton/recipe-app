@@ -1,46 +1,39 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  ADD,
-  BASE,
-  EDIT,
-  FEED,
-  LOGIN,
-  VIEW,
-} from './shared/constants/routes.const';
+import { AppRoutes } from './shared/constants/routes.const';
 
 const routes: Routes = [
   {
-    path: BASE,
-    redirectTo: LOGIN,
+    path: AppRoutes.Base,
+    redirectTo: AppRoutes.Login,
     pathMatch: 'full',
   },
   {
-    path: ADD,
+    path: AppRoutes.Add,
     loadChildren: () =>
       import('./pages/add-recipe/add-recipe.module').then(
         (m) => m.AddRecipePageModule,
       ),
   },
   {
-    path: `${EDIT}/:id`,
+    path: `${AppRoutes.Edit}/:id`,
     loadChildren: () =>
       import('./pages/edit-recipe/edit-recipe.module').then(
         (m) => m.EditRecipePageModule,
       ),
   },
   {
-    path: FEED,
+    path: AppRoutes.Feed,
     loadChildren: () =>
       import('./pages/feed/feed.module').then((m) => m.FeedPageModule),
   },
   {
-    path: LOGIN,
+    path: AppRoutes.Login,
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
   {
-    path: `${VIEW}/:id`,
+    path: `${AppRoutes.View}/:id`,
     loadChildren: () =>
       import('./pages/view-recipe/view-recipe.module').then(
         (m) => m.ViewRecipePageModule,

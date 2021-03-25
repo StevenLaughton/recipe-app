@@ -51,8 +51,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     StoreModule.forRoot({
       user: UserReducer,
       recipes: RecipesReducer,
-      selectedRecipe: SelectedRecipeReducer,
       images: ImagesReducer,
+      selectedRecipe: SelectedRecipeReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -66,10 +66,6 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       ImagesEffects,
     ]),
     EffectsModule.forRoot(),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
   ],
   providers: [
     StatusBar,

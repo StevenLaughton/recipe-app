@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Recipe } from '../../shared/models/recipe.model';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectRecipe } from 'src/app/core/recipes/recipes.selectors';
 import { saveRecipe } from 'src/app/core/recipes/save-recipe/save-recipe.actions';
 import { ToastService } from 'src/app/services/toast.service';
@@ -27,7 +27,7 @@ export class EditRecipePage implements OnInit {
       mergeMap((params) => {
         const id = params.get('id');
         return !!id
-          ? this.store.pipe(select(selectRecipe, id))
+          ? this.store.select(selectRecipe, id)
           : this.toastService
               .showMessageAndReturnToFeed(
                 'An error occurred getting the recipe',

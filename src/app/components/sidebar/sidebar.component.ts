@@ -23,8 +23,8 @@ export class SidebarComponent {
     select(selectRecipeCategories),
   );
 
-  loaded$: Observable<boolean> = this.store.pipe(select(recipesLoaded));
-  isLoggedIn$: Observable<boolean> = this.store.pipe(select(isLoggedIn));
+  loaded$: Observable<boolean> = this.store.select(recipesLoaded);
+  isLoggedIn$: Observable<boolean> = this.store.select(isLoggedIn);
 
   vegetarianSelected$: Observable<boolean> = this.store.pipe(
     select(selectVegetarianFilter),

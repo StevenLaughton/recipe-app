@@ -1,15 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 
-export const deleteRecipe = createAction(
-  '[Delete/Recipe]  delete Recipe',
+export const begin = createAction(
+  '[Delete Recipe] Begin',
   props<{ recipeId: string }>(),
 );
 
-export const deleteRecipeSuccess = createAction(
-  '[Delete/Recipe] delete Recipe Success',
-);
+export const success = createAction('[Delete Recipe] Success');
 
-export const deleteRecipeFailure = createAction(
-  '[Delete/Recipe] delete Recipes Failure',
+export const failure = createAction(
+  '[Delete Recipe] Failure',
   props<{ error: any }>(),
 );

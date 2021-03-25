@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/shared/models/user.model';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
-import { LOGIN } from 'src/app/shared/constants/routes.const';
+import { AppRoutes } from 'src/app/shared/constants/routes.const';
 
 @Injectable()
 export class UserEffects {
@@ -53,6 +53,6 @@ export class UserEffects {
 
   async successMessage(): Promise<void> {
     await this.toastService.showMessage('Logged Out');
-    await this.router.navigate([LOGIN]);
+    await this.router.navigate([AppRoutes.Login]);
   }
 }

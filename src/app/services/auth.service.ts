@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { LOGIN } from 'src/app/shared/constants/routes.const';
 import { from, Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 import firebase from 'firebase';
 import User = firebase.User;
+import { AppRoutes } from '../shared/constants/routes.const';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class AuthService {
   // Sign out
   async SignOut(): Promise<void> {
     await this.afAuth.signOut();
-    await this.router.navigate([LOGIN]);
+    await this.router.navigate([AppRoutes.Login]);
     const toast = await this.toastController.create({
       message: 'Logged Out',
       duration: 2000,

@@ -12,16 +12,14 @@ import { ToastService } from 'src/app/services/toast.service';
 export class DeleteRecipeEffects {
   deleteRecipes$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(DeleteRecipeActions.deleteRecipe),
+      ofType(DeleteRecipeActions.begin),
       flatMap((data) => [
         this.imageService.delete(data.recipeId),
         this.recipeService.delete(data.recipeId),
       ]),
-      map(() => DeleteRecipeActions.deleteRecipeSuccess()),
+      map(() => DeleteRecipeActions.success()),
       tap(() => this.toastService.showMessageAndReturnToFeed('Recipe Deleted')),
-      catchError((error) =>
-        of(DeleteRecipeActions.deleteRecipeFailure({ error })),
-      ),
+      catchError((error) => of(DeleteRecipeActions.failure({ error }))),
     );
   });
 

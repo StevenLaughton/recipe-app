@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LOGIN } from '../../shared/constants/routes.const';
 import { select, Store } from '@ngrx/store';
 import { isLoggedIn } from '../users/user.selectors';
+import { AppRoutes } from 'src/app/shared/constants/routes.const';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       select(isLoggedIn),
       tap((loggedIn) => {
         if (!loggedIn) {
-          this.router.navigate([LOGIN]);
+          this.router.navigate([AppRoutes.Login]);
         }
       }),
     );
