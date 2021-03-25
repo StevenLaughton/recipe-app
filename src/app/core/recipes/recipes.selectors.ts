@@ -2,6 +2,7 @@ import { Dictionary } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { RecipeDto } from 'src/app/shared/models/recipe.dto.model';
 import { Recipe } from 'src/app/shared/models/recipe.model';
+import { selectRouteParams } from '../router.selector';
 import * as fromRecipes from './recipes.reducer';
 
 export const selectRecipesState = createFeatureSelector<fromRecipes.RecipeState>(
@@ -47,12 +48,14 @@ export const selectRecipeEntities = createSelector(
 
 export const selectRecipe = createSelector(
   selectRecipeEntities,
-  (recipes: Dictionary<Recipe>, id: string) => recipes[id],
+  selectRouteParams,
+  (recipes: Dictionary<Recipe>, { id }) => recipes[id],
 );
 
 export const selectRecipeDto = createSelector(
   selectRecipeEntities,
-  (recipes: Dictionary<Recipe>, id: string) => new RecipeDto(recipes[id]),
+  selectRouteParams,
+  (recipes: Dictionary<Recipe>, { id }) => new RecipeDto(recipes[id]),
 );
 
 export const selectVegetarianFilter = createSelector(

@@ -26,6 +26,7 @@ import { DeleteRecipeEffects } from './core/recipes/delete-recipe/delete-recipe.
 import { SelectedRecipeReducer } from './core/recipes/selected-recipe/selected-recipe.reducer';
 import { ImagesReducer } from './core/images/images.reducer';
 import { ImagesEffects } from './core/images/images.effects';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -49,6 +50,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       registrationStrategy: 'registerImmediately',
     }),
     StoreModule.forRoot({
+      router: routerReducer,
       user: UserReducer,
       recipes: RecipesReducer,
       images: ImagesReducer,
@@ -66,6 +68,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       ImagesEffects,
     ]),
     EffectsModule.forRoot(),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     StatusBar,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Recipe } from '../../shared/models/recipe.model';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
@@ -14,6 +14,7 @@ import { AppRoutes } from 'src/app/shared/constants/routes.const';
   selector: 'app-feed',
   templateUrl: './feed.page.html',
   styleUrls: ['./feed.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedPage {
   recipes$: Observable<Array<Recipe>> = this.store.select(
