@@ -1,24 +1,22 @@
-import {FeedCardComponent} from './feed-card.component';
-import {ImageService} from '../../services/image.service';
-import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {FeedCardModule} from './feed-card.module';
+import { FeedCardComponent } from './feed-card.component';
+import { ImageService } from '../../services/image.service';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { FeedCardModule } from './feed-card.module';
+import { of } from 'rxjs';
+import { RecipeModelMock } from 'src/app/core/mock/recipe.model.mock';
 
 describe('FeedCardComponent', () => {
-    let component: FeedCardComponent;
-    let fixture: MockedComponentFixture<FeedCardComponent>;
+  beforeEach(() =>
+    MockBuilder(FeedCardComponent, FeedCardModule).mock(ImageService, {
+      hasImage: () => of(true),
+    }),
+  );
 
-    beforeEach(async () => {
-        return MockBuilder(FeedCardComponent, FeedCardModule)
-            .mock(ImageService);
+  it('should create', () => {
+    const fixture = MockRender(FeedCardComponent, {
+      recipe: RecipeModelMock.createOne(),
     });
 
-    beforeEach(() => {
-        fixture = MockRender(FeedCardComponent);
-        component = fixture.point.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    expect(fixture.point.componentInstance).toBeDefined();
+  });
 });

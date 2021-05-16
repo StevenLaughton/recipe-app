@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Recipe } from 'src/app/shared/models/recipe.model';
+import { Recipe } from '../models/recipe.model';
 
 export const loadRecipes = createAction('[Recipes] Load Recipes');
 

@@ -5,10 +5,10 @@ import { of } from 'rxjs';
 
 import * as UserActions from './user.actions';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/shared/models/user.model';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
-import { AppRoutes } from 'src/app/shared/constants/routes.const';
+import { User } from '../models/user.model';
+import { AppRoutes } from '../constants/routes.const';
 
 @Injectable()
 export class UserEffects {

@@ -1,28 +1,29 @@
 import { LoginPage } from './login.page';
-import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
-import { AuthService } from '../../services/auth.service';
-import { FirebaseUIModule } from 'firebaseui-angular';
-import { RouterTestingModule } from '@angular/router/testing';
+import { MockBuilder, MockRender } from 'ng-mocks';
 import { LoginPageModule } from './login.module';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 describe('LoginPage', () => {
-  let component: LoginPage;
-  let fixture: MockedComponentFixture<LoginPage>;
+  const initialState = {
+    user: {
+      id: '1',
+      displayName: 'Test User',
+      email: 'TestUser@email.com',
+      photoUrl: 'photo:url',
+    },
+    isLoggedIn: false,
+  };
 
-  beforeEach(() => {
-    return MockBuilder(LoginPage, LoginPageModule)
-      .mock(AuthService)
-      .mock(FirebaseUIModule)
-      .keep(RouterTestingModule);
-  });
-
-  beforeEach(() => {
-    fixture = MockRender(LoginPage);
-    component = fixture.point.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() =>
+    MockBuilder(LoginPage, LoginPageModule)
+      .provide(provideMockStore({ initialState }))
+      .mock(Router),
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(LoginPage);
+    expect(fixture.point.componentInstance).toBeDefined();
   });
 });

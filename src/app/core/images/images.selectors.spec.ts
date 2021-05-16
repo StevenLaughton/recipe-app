@@ -4,9 +4,9 @@ import { selectImagesState } from './images.selectors';
 describe('Images Selectors', () => {
   it('should select the feature state', () => {
     const result = selectImagesState({
-      [fromImages.imagesFeatureKey]: {}
+      [fromImages.imagesFeatureKey]: {},
     });
 
-    expect(result).toEqual({});
+    expect(result.base64String).toEqual(undefined);
   });
 });

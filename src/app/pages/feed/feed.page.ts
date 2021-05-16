@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Recipe } from '../../shared/models/recipe.model';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -8,7 +7,8 @@ import {
   recipesLoaded,
   selectRecipesWithCategory,
 } from 'src/app/core/recipes/recipes.selectors';
-import { AppRoutes } from 'src/app/shared/constants/routes.const';
+import { Recipe } from 'src/app/core/models/recipe.model';
+import { AppRoutes } from 'src/app/core/constants/routes.const';
 
 @Component({
   selector: 'app-feed',

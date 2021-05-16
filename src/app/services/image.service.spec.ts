@@ -1,18 +1,14 @@
-import {ImageService} from './image.service';
-import {MockService} from 'ng-mocks';
+import { ImageService } from './image.service';
+import { MockBuilder, MockRender, MockService } from 'ng-mocks';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 describe('ImageService', () => {
-    let service: ImageService;
+  let service: ImageService;
 
-    beforeEach(() => {
-        // MockBuilder(ImageService)
-        //     .mock(AngularFireStorage);
+  beforeEach(() => MockBuilder(ImageService).mock(AngularFireStorage));
 
-        // service = TestBed.inject(ImageService);
-        service = MockService(ImageService);
-    });
-
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
+  it('should be created', () => {
+    const fixture = MockRender(ImageService);
+    expect(fixture.point.componentInstance).toBeDefined();
+  });
 });

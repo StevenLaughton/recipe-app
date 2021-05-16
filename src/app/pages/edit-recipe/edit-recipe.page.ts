@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Recipe } from '../../shared/models/recipe.model';
 import { Store } from '@ngrx/store';
 import { selectRecipe } from 'src/app/core/recipes/recipes.selectors';
 import { saveRecipe } from 'src/app/core/recipes/save-recipe/save-recipe.actions';
+import { Recipe } from 'src/app/core/models/recipe.model';
 
 @Component({
   selector: 'app-edit-recipe',

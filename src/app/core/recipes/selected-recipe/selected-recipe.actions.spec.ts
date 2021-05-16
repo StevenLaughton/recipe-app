@@ -6,6 +6,6 @@ describe('loadSelectedRecipes', () => {
     expect(
       fromSelectedRecipe.setSelectedRecipe({ recipe: new RecipeDto(undefined) })
         .type,
-    ).toBe('[SelectedRecipe] Load SelectedRecipes');
+    ).toBe('[SelectedRecipe] Set Selected Recipe');
   });
 });

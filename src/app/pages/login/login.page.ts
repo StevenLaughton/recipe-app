@@ -4,7 +4,8 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { select, Store } from '@ngrx/store';
 import { isLoggedIn } from 'src/app/core/users/user.selectors';
 import { tap } from 'rxjs/operators';
-import { AppRoutes } from 'src/app/shared/constants/routes.const';
+import { UserState } from 'src/app/core/users/user.reducer';
+import { AppRoutes } from 'src/app/core/constants/routes.const';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,10 @@ import { AppRoutes } from 'src/app/shared/constants/routes.const';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, OnDestroy {
-  constructor(private readonly store: Store, private readonly router: Router) {}
+  constructor(
+    private readonly store: Store<UserState>,
+    private readonly router: Router,
+  ) {}
 
   ngOnDestroy(): void {}
 

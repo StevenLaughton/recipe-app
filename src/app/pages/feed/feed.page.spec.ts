@@ -1,32 +1,21 @@
-import {ActionSheetController, IonRouterOutlet} from '@ionic/angular';
-
-import {FeedPage} from './feed.page';
-import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {FeedService} from '../../services/feed.service';
-import {Router} from '@angular/router';
-import {CategoryService} from '../../services/category.service';
-import {FeedPageModule} from './feed.module';
+import { FeedPage } from './feed.page';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { FeedPageModule } from './feed.module';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Store } from '@ngrx/store';
+import { ActionSheetController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 describe('FeedPage', () => {
-    let component: FeedPage;
-    let fixture: MockedComponentFixture<FeedPage>;
+  beforeEach(() =>
+    MockBuilder(FeedPage, FeedPageModule)
+      .mock(Store, () => provideMockStore())
+      .mock(ActionSheetController)
+      .mock(Router),
+  );
 
-    beforeEach(() => {
-        return MockBuilder(FeedPage, FeedPageModule)
-            .mock(FeedService)
-            .mock(Router)
-            .mock(IonRouterOutlet)
-            .mock(CategoryService)
-            .mock(ActionSheetController);
-    });
-
-    beforeEach(() => {
-        fixture = MockRender(FeedPage);
-        component = fixture.point.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    const fixture = MockRender(FeedPage);
+    expect(fixture.point.componentInstance).toBeDefined();
+  });
 });

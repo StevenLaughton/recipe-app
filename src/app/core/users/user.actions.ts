@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/shared/models/user.model';
+import { User } from '../models/user.model';
 
 export const loadUsers = createAction('[User] Load Users');
 
@@ -18,6 +18,6 @@ export const signOut = createAction('[User] Sign Out');
 export const signOutSuccess = createAction('[User] Sign Out Success');
 
 export const signOutFailure = createAction(
-  '[User] LSign Out Failure',
+  '[User] Sign Out Failure',
   props<{ error: string }>(),
 );

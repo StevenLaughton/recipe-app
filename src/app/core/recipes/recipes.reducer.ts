@@ -1,6 +1,6 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { Recipe } from 'src/app/shared/models/recipe.model';
+import { Recipe } from '../models/recipe.model';
 import * as RecipesActions from './recipes.actions';
 
 export const recipesFeatureKey = 'recipes';

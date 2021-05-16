@@ -3,11 +3,11 @@ import { AlertController, PopoverController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import * as DeleteRecipeActions from 'src/app/core/recipes/delete-recipe/delete-recipe.actions';
-import { take, tap } from 'rxjs/operators';
+import { finalize, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { setDisplayedPortions } from 'src/app/core/recipes/selected-recipe/selected-recipe.actions';
 import { selectDisplayedPortions } from 'src/app/core/recipes/selected-recipe/selected-recipe.selectors';
-import { AppRoutes } from 'src/app/shared/constants/routes.const';
+import { AppRoutes } from 'src/app/core/constants/routes.const';
 
 @Component({
   selector: 'app-view-recipe-popover',
@@ -32,8 +32,8 @@ export class ViewRecipePopoverComponent implements OnInit {
   ngOnInit(): void {
     this.store
       .pipe(
-        take(1),
         select(selectDisplayedPortions),
+        take(1),
         tap((portions) => this.portionsControl.setValue(portions)),
       )
       .subscribe();
@@ -44,7 +44,7 @@ export class ViewRecipePopoverComponent implements OnInit {
         tap((portions) =>
           this.store.dispatch(setDisplayedPortions({ value: portions })),
         ),
-        tap(() => this.popover.dismiss()),
+        finalize(() => this.popover.dismiss()),
       )
       .subscribe();
   }

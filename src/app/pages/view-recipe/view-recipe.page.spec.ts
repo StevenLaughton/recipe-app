@@ -1,29 +1,23 @@
-import {ViewRecipePage} from './view-recipe.page';
-import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {ImageService} from '../../services/image.service';
-import {RecipeService} from '../../services/recipe.service';
-import {RouterTestingModule} from '@angular/router/testing';
-import {ViewRecipePageModule} from './view-recipe.module';
+import { ViewRecipePage } from './view-recipe.page';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { ViewRecipePageModule } from './view-recipe.module';
+import { PopoverController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('ViewRecipePage', () => {
-    let component: ViewRecipePage;
-    let fixture: MockedComponentFixture<ViewRecipePage>;
+  beforeEach(() =>
+    MockBuilder(ViewRecipePage, ViewRecipePageModule)
+      .mock(PopoverController)
+      .provide(
+        provideMockStore({
+          initialState: {},
+        }),
+      ),
+  );
 
-    beforeEach(() => {
-        return MockBuilder(ViewRecipePage, ViewRecipePageModule)
-            .mock(ImageService)
-            .mock(RecipeService)
-            .keep(RouterTestingModule.withRoutes([]));
-
-    });
-
-    beforeEach(() => {
-        fixture = MockRender(ViewRecipePage);
-        component = fixture.point.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    const fixture = MockRender(ViewRecipePage);
+    expect(fixture.point.componentInstance).toBeDefined();
+  });
 });

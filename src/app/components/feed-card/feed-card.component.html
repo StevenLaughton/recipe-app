@@ -2,7 +2,7 @@
 	<ion-grid>
 		<ion-row>
 			<ion-col size="6" class="no-padding">
-				<ng-container *ngIf="hasImage$ | async; let url; else NoImage">
+				<ng-container *ngIf="hasImage$ | async; else NoImage">
 					<ion-thumbnail>
 						<ion-img [src]="imagePath | getDownloadURL" alt="Recipe Image">
 						</ion-img>

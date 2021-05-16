@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Recipe } from 'src/app/core/models/recipe.model';
 import { ImageService } from '../../services/image.service';
-import { Recipe } from '../../shared/models/recipe.model';
 
 @Component({
   selector: 'app-feed-card',
@@ -10,7 +10,7 @@ import { Recipe } from '../../shared/models/recipe.model';
 })
 export class FeedCardComponent implements OnInit {
   @Input()
-  recipe!: Recipe;
+  recipe: Recipe = new Recipe();
 
   imageUrl$: Observable<string | undefined> = of(undefined);
   hasImage$: Observable<boolean> = of(false);

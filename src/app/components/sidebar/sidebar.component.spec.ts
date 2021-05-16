@@ -2,22 +2,21 @@ import { SidebarComponent } from './sidebar.component';
 import { AuthService } from '../../services/auth.service';
 import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
 import { SidebarModule } from './sidebar.module';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: MockedComponentFixture<SidebarComponent>;
 
-  beforeEach(async () =>
-    MockBuilder(SidebarComponent, SidebarModule).mock(AuthService),
+  beforeEach(() =>
+    MockBuilder(SidebarComponent, SidebarModule).mock(Store, () =>
+      provideMockStore(),
+    ),
   );
 
-  beforeEach(() => {
-    fixture = MockRender(SidebarComponent);
-    component = fixture.point.componentInstance;
-    fixture.detectChanges();
-  });
-
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(SidebarComponent);
+    expect(fixture.point.componentInstance).toBeDefined();
   });
 });

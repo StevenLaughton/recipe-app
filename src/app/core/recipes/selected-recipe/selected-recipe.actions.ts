@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { RecipeDto } from 'src/app/shared/models/recipe.dto.model';
+import { RecipeDto } from '../../models/recipe.dto.model';
 
 export const setSelectedRecipe = createAction(
   '[SelectedRecipe] Set Selected Recipe',

@@ -19,15 +19,15 @@ import { signOut } from 'src/app/core/users/user.actions';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  categories$: Observable<Array<string>> = this.store.pipe(
-    select(selectRecipeCategories),
+  categories$: Observable<Array<string>> = this.store.select(
+    selectRecipeCategories,
   );
 
   loaded$: Observable<boolean> = this.store.select(recipesLoaded);
   isLoggedIn$: Observable<boolean> = this.store.select(isLoggedIn);
 
-  vegetarianSelected$: Observable<boolean> = this.store.pipe(
-    select(selectVegetarianFilter),
+  vegetarianSelected$: Observable<boolean> = this.store.select(
+    selectVegetarianFilter,
   );
 
   constructor(private readonly store: Store) {}

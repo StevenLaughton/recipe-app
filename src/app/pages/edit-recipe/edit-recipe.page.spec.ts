@@ -1,28 +1,22 @@
-import {EditRecipePage} from './edit-recipe.page';
-import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {ImageService} from '../../services/image.service';
-import {RecipeService} from '../../services/recipe.service';
-import {RouterTestingModule} from '@angular/router/testing';
-import {EditRecipePageModule} from './edit-recipe.module';
+import { EditRecipePage } from './edit-recipe.page';
+import { MockBuilder, MockedComponentFixture, MockRender } from 'ng-mocks';
+import { EditRecipePageModule } from './edit-recipe.module';
 
 describe('EditRecipePage', () => {
-    let component: EditRecipePage;
-    let fixture: MockedComponentFixture<EditRecipePage>;
+  let component: EditRecipePage;
+  let fixture: MockedComponentFixture<EditRecipePage>;
 
-    beforeEach(() => {
-        return MockBuilder(EditRecipePage, EditRecipePageModule)
-            .mock(ImageService)
-            .mock(RecipeService)
-            .keep(RouterTestingModule);
-    });
+  beforeEach(() => {
+    return MockBuilder(EditRecipePage, EditRecipePageModule).build();
+  });
 
-    beforeEach(() => {
-        fixture = MockRender(EditRecipePage);
-        component = fixture.point.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = MockRender(EditRecipePage);
+    component = fixture.point.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
