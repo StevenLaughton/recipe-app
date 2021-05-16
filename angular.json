@@ -19,8 +19,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
+            "assets": [{
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
@@ -33,8 +32,7 @@
               "src/manifest.webmanifest",
               "src/robots.txt"
             ],
-            "styles": [
-              {
+            "styles": [{
                 "input": "src/theme/variables.scss",
                 "inject": true
               },
@@ -43,16 +41,21 @@
                 "inject": true
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "aot": true,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": true,
+            "sourceMap": true,
+            "optimization": true,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -63,8 +66,7 @@
               "buildOptimizer": true,
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json",
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "500kb",
                   "maximumError": "2mb"
@@ -110,8 +112,7 @@
             "karmaConfig": "karma.conf.js",
             "styles": [],
             "scripts": [],
-            "assets": [
-              {
+            "assets": [{
                 "glob": "favicon.ico",
                 "input": "src/",
                 "output": "/"

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Recipe } from 'src/app/core/models/recipe.model';
 import { selectRecipeCategories } from 'src/app/core/recipes/recipes.selectors';
-import { CustomValidators } from 'src/app/core/validators/ingredients.validator';
+import { IngredientsValidator } from 'src/app/core/validators/ingredients.validator';
 
 @Component({
   selector: 'app-recipe-form',
@@ -70,7 +70,7 @@ export class RecipeFormComponent implements OnInit {
       vegetarian: [recipe.vegetarian],
       ingredients: [
         recipe.ingredients.join(this.delimiter),
-        [Validators.required, CustomValidators.IngredientsValidator()],
+        [Validators.required, IngredientsValidator()],
       ],
       steps: [recipe.steps.join(this.delimiter), Validators.required],
     });

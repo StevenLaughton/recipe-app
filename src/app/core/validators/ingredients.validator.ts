@@ -1,13 +1,14 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 
-export namespace CustomValidators {
-  export function IngredientsValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const valid = control.value
-        .split('..')
-        .map((ing: string) => ing.trim())
-        .every((ing: string) => typeof ing.split(' ').shift() === 'number');
-      return valid ? { ingredients: { value: control.value } } : null;
-    };
-  }
+export function IngredientsValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const valid = control.value
+      .split('..')
+      .map((ing: string) => ing.trim())
+      .every((ing: string) => !isNaN(+ing.split(' ')[0]));
+    const ret = valid
+      ? null
+      : { error: 'Ingredients do not match the pattern' };
+    return ret;
+  };
 }
