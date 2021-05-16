@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
 import { from, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { Recipe } from '../shared/models/recipe.model';
 import firebase from 'firebase';
 import Query = firebase.firestore.Query;
 import { selectVegetarianFilter } from '../core/recipes/recipes.selectors';
 import { select, Store } from '@ngrx/store';
+import { Recipe } from '../core/models/recipe.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { from, Observable, of } from 'rxjs';
-import { Photo } from '../shared/models/photo.model';
-import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import { last, map, mergeMap } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+import { last, map } from 'rxjs/operators';
 
 const { Camera } = Plugins;
 

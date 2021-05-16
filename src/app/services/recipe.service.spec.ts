@@ -1,24 +1,20 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {RecipeService} from './recipe.service';
-import {AngularFirestore} from '@angular/fire/firestore';
+import { RecipeService } from './recipe.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { Store } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('RecipeService', () => {
-  let service: RecipeService;
-  let fireStoreSpy: AngularFirestore;
-
-  beforeEach(() => {
-    fireStoreSpy = jasmine.createSpyObj('AngularFirestore', ['collection', 'doc', 'createId']);
-
-    TestBed.configureTestingModule({
-      providers: [
-        {provide: AngularFirestore, useValue: fireStoreSpy},
-      ],
-    });
-    service = TestBed.inject(RecipeService);
-  });
+  beforeEach(() =>
+    MockBuilder(RecipeService)
+      .mock(AngularFirestore)
+      .provide(provideMockStore()),
+  );
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    const fixture = MockRender(RecipeService);
+    expect(fixture.point.componentInstance).toBeDefined();
   });
 });

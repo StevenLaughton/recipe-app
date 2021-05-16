@@ -1,24 +1,19 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { MockBuilder, MockRender } from 'ng-mocks';
 
 import { UploadImageComponent } from './upload-image.component';
+import { UploadImageModule } from './upload-image.module';
 
 describe('UploadImageComponent', () => {
-  let component: UploadImageComponent;
-  let fixture: ComponentFixture<UploadImageComponent>;
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UploadImageComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(UploadImageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+  beforeEach(() =>
+    MockBuilder(UploadImageComponent, UploadImageModule).mock(Store, () =>
+      provideMockStore(),
+    ),
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const component = MockRender(UploadImageComponent);
+    expect(component.point.componentInstance).toBeDefined();
   });
 });

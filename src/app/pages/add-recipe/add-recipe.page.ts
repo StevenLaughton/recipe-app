@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Recipe } from '../../shared/models/recipe.model';
 import { Store } from '@ngrx/store';
+import { Recipe } from 'src/app/core/models/recipe.model';
 import { saveRecipe } from 'src/app/core/recipes/save-recipe/save-recipe.actions';
 
 @Component({

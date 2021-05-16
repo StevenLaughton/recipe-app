@@ -4,9 +4,9 @@ import { selectUserState } from './user.selectors';
 describe('User Selectors', () => {
   it('should select the feature state', () => {
     const result = selectUserState({
-      [fromUser.userFeatureKey]: {}
+      [fromUser.userFeatureKey]: {},
     });
 
-    expect(result).toEqual({});
+    expect(result.isLoggedIn).toBeUndefined();
   });
 });

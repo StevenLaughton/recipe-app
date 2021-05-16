@@ -7,6 +7,8 @@ describe('SelectedRecipe Selectors', () => {
       [fromSelectedRecipe.selectedRecipeFeatureKey]: {},
     });
 
-    expect(result).toEqual({});
+    expect(result.recipe).toBeUndefined();
+
+    expect(result.selectedPortions).toBeUndefined();
   });
 });

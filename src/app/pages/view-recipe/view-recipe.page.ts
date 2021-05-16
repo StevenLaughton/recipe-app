@@ -1,14 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RecipeDto } from '../../shared/models/recipe.dto.model';
 import { PopoverController } from '@ionic/angular';
 import { ViewRecipePopoverComponent } from '../../components/view-recipe-popover/view-recipe-popover.component';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { selectRecipeDto } from 'src/app/core/recipes/recipes.selectors';
 import {
@@ -16,6 +10,7 @@ import {
   setSelectedRecipe,
 } from 'src/app/core/recipes/selected-recipe/selected-recipe.actions';
 import { selectPortionsMultiplier } from 'src/app/core/recipes/selected-recipe/selected-recipe.selectors';
+import { RecipeDto } from 'src/app/core/models/recipe.dto.model';
 
 @Component({
   selector: 'app-view-recipe',
@@ -23,8 +18,11 @@ import { selectPortionsMultiplier } from 'src/app/core/recipes/selected-recipe/s
   styleUrls: ['./view-recipe.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ViewRecipePage implements OnInit, OnDestroy {
-  recipe$: Observable<RecipeDto> = new Observable<RecipeDto>();
+export class ViewRecipePage {
+  recipe$: Observable<RecipeDto> = this.store.select(selectRecipeDto).pipe(
+    tap((recipe) => this.store.dispatch(setSelectedRecipe({ recipe }))),
+    finalize(() => this.store.dispatch(removeSelectedRecipe())),
+  );
 
   multiplier$: Observable<number> = this.store.select(selectPortionsMultiplier);
 
@@ -32,18 +30,6 @@ export class ViewRecipePage implements OnInit, OnDestroy {
     private readonly store: Store,
     private readonly popover: PopoverController,
   ) {}
-
-  ngOnDestroy(): void {
-    this.store.dispatch(removeSelectedRecipe());
-  }
-
-  ngOnInit(): void {
-    this.recipe$ = this.store
-      .select(selectRecipeDto)
-      .pipe(
-        tap((recipe) => this.store.dispatch(setSelectedRecipe({ recipe }))),
-      );
-  }
 
   async presentPopover(ev: Event, recipe: RecipeDto) {
     const popover = await this.popover.create({

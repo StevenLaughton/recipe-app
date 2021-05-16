@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { RecipeDto } from 'src/app/shared/models/recipe.dto.model';
+import { RecipeDto } from '../../models/recipe.dto.model';
 import * as SelectedRecipeActions from './selected-recipe.actions';
 
 export const selectedRecipeFeatureKey = 'selectedRecipe';

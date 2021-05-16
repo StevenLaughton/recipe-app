@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { AppRoutes } from '../shared/constants/routes.const';
+import { AppRoutes } from '../core/constants/routes.const';
 
 @Injectable({
   providedIn: 'root',

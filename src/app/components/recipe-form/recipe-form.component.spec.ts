@@ -1,27 +1,22 @@
-import {RecipeFormComponent} from './recipe-form.component';
-import {MockBuilder, MockedComponentFixture, MockRender} from 'ng-mocks';
-import {RecipeFormModule} from './recipe-form.module';
-import {CategoryService} from '../../services/category.service';
-import {ImageService} from '../../services/image.service';
+import { RecipeFormComponent } from './recipe-form.component';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { RecipeFormModule } from './recipe-form.module';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { provideMockStore } from '@ngrx/store/testing';
+import { RecipeModelMock } from 'src/app/core/mock/recipe.model.mock';
 
 describe('RecipeFormComponent', () => {
-    let component: RecipeFormComponent;
-    let fixture: MockedComponentFixture<RecipeFormComponent>;
+  beforeEach(() =>
+    MockBuilder(RecipeFormComponent, RecipeFormModule)
+      .keep(FormBuilder)
+      .keep(ReactiveFormsModule)
+      .provide(provideMockStore()),
+  );
 
-    beforeEach(async () => {
-        return MockBuilder(RecipeFormComponent, RecipeFormModule)
-            .mock(CategoryService)
-            .mock(ImageService);
+  it('should create', () => {
+    const fixture = MockRender(RecipeFormComponent, {
+      recipe: RecipeModelMock.createOne(),
     });
-
-    beforeEach(() => {
-        fixture = MockRender(RecipeFormComponent);
-        component = fixture.point.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
+    expect(fixture.point.componentInstance).toBeDefined();
+  });
 });

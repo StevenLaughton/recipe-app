@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
 import { ViewRecipePageRoutingModule } from './view-recipe-routing.module';
-
 import { ViewRecipePage } from './view-recipe.page';
-import { PipesModule } from '../../shared/pipes/pipes.module';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 @NgModule({
   imports: [

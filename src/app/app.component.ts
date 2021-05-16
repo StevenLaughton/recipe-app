@@ -3,7 +3,6 @@ import { AlertController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SwUpdate } from '@angular/service-worker';
-import { Meta, Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { loadUsers } from './core/users/user.actions';
 import { loadRecipes } from './core/recipes/recipes.actions';
@@ -21,8 +20,6 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private swUpdate: SwUpdate,
-    private titleService: Title,
-    private metaService: Meta,
     public alertController: AlertController,
     private readonly store: Store,
   ) {
@@ -39,7 +36,6 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.addMetaTags();
     await this.checkAndUpdateServiceWorker();
   }
 
@@ -71,13 +67,5 @@ export class AppComponent implements OnInit {
     });
 
     await alert.present();
-  }
-
-  private addMetaTags() {
-    this.titleService.setTitle(this.title);
-    this.metaService.addTags([
-      { name: 'keywords', content: 'Recipe' },
-      { name: 'description', content: 'Recipe App' },
-    ]);
   }
 }

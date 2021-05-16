@@ -5,7 +5,7 @@ import { from, Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 import firebase from 'firebase';
 import User = firebase.User;
-import { AppRoutes } from '../shared/constants/routes.const';
+import { AppRoutes } from '../core/constants/routes.const';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,7 @@ export class AuthService {
   async SignOut(): Promise<void> {
     await this.afAuth.signOut();
     await this.router.navigate([AppRoutes.Login]);
+
     const toast = await this.toastController.create({
       message: 'Logged Out',
       duration: 2000,

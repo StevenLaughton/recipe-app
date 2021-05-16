@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Recipe } from 'src/app/core/models/recipe.model';
 import { selectRecipeCategories } from 'src/app/core/recipes/recipes.selectors';
-import { Recipe } from '../../shared/models/recipe.model';
+import { CustomValidators } from 'src/app/core/validators/ingredients.validator';
 
 @Component({
   selector: 'app-recipe-form',
@@ -36,9 +37,6 @@ export class RecipeFormComponent implements OnInit {
   }
 
   private delimiter = '..';
-  private ingredientsRegex = new RegExp(
-    /((\d*\.)?\d+\s+[\w\s\d]*\s\.\.\s*)*((\d*\.)?\d+\s*[\w\s\d]*\s)/gm,
-  );
 
   timeOptions = ['<15', '15', '30', '45', '60', '>60'];
 
@@ -51,8 +49,8 @@ export class RecipeFormComponent implements OnInit {
   form: FormGroup | undefined;
   createNewCategory = false;
 
-  categories$: Observable<Array<string>> = this.store.pipe(
-    select(selectRecipeCategories),
+  categories$: Observable<Array<string>> = this.store.select(
+    selectRecipeCategories,
   );
 
   constructor(
@@ -72,7 +70,7 @@ export class RecipeFormComponent implements OnInit {
       vegetarian: [recipe.vegetarian],
       ingredients: [
         recipe.ingredients.join(this.delimiter),
-        [Validators.required, Validators.pattern(this.ingredientsRegex)],
+        [Validators.required, CustomValidators.IngredientsValidator()],
       ],
       steps: [recipe.steps.join(this.delimiter), Validators.required],
     });

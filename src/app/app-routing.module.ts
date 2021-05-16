@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppRoutes } from './shared/constants/routes.const';
+import { AppRoutes } from './core/constants/routes.const';
 
 const routes: Routes = [
   {

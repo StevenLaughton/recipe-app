@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { isLoggedIn } from '../users/user.selectors';
-import { AppRoutes } from 'src/app/shared/constants/routes.const';
+import { AppRoutes } from '../constants/routes.const';
 
 @Injectable({
   providedIn: 'root',

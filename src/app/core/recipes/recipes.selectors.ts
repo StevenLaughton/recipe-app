@@ -1,13 +1,12 @@
 import { Dictionary } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { RecipeDto } from 'src/app/shared/models/recipe.dto.model';
-import { Recipe } from 'src/app/shared/models/recipe.model';
+import { RecipeDto } from '../models/recipe.dto.model';
+import { Recipe } from '../models/recipe.model';
 import { selectRouteParams } from '../router.selector';
 import * as fromRecipes from './recipes.reducer';
 
-export const selectRecipesState = createFeatureSelector<fromRecipes.RecipeState>(
-  fromRecipes.recipesFeatureKey,
-);
+export const selectRecipesState =
+  createFeatureSelector<fromRecipes.RecipeState>(fromRecipes.recipesFeatureKey);
 
 export const recipesLoaded = createSelector(
   selectRecipesState,
