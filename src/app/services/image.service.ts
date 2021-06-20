@@ -4,8 +4,6 @@ import { from, Observable, of } from 'rxjs';
 import { Plugins } from '@capacitor/core';
 import { last, map } from 'rxjs/operators';
 
-const { Camera } = Plugins;
-
 @Injectable({
   providedIn: 'root',
 })
