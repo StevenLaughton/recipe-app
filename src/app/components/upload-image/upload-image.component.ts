@@ -25,7 +25,7 @@ export class UploadImageComponent implements OnDestroy {
   async addToStorage(): Promise<void> {
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
-      source: CameraSource.Photos,
+      source: CameraSource.Prompt,
       quality: 75,
     });
 
